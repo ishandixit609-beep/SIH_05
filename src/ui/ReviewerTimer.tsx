@@ -21,7 +21,7 @@ export function ReviewerTimer() {
         {t0 !== null && <b className="t">{Math.round((now - t0) / 1000)} s</b>}
         <button className="btn" onClick={() => { setRuns([]); save([]) }}>clear</button>
       </div>
-      <table className="ledger sm" style={{ marginTop: 8 }}><thead><tr><th>condition</th><th className="num">runs</th><th className="num">mean time</th></tr></thead>
+      <table className="ledger sm tight" style={{ marginTop: 8 }}><thead><tr><th>condition</th><th className="num">runs</th><th className="num">mean time</th></tr></thead>
         <tbody><tr><td>with SATYAPAN</td><td className="num">{w.length}</td><td className="num">{mean(w)}</td></tr><tr><td>without</td><td className="num">{wo.length}</td><td className="num">{mean(wo)}</td></tr></tbody></table>
       <div className="xs dim" style={{ marginTop: 6 }}>Stored only in this browser. With a handful of volunteers this is an indication, not a statistic.</div>
     </div>

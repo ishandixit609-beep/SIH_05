@@ -32,7 +32,7 @@ function Root() {
 
 async function boot() {
   // Mock backend is on unless VITE_API_BASE points at the real FastAPI server.
-  if (!import.meta.env.VITE_API_BASE) { const { worker } = await import('./mocks/browser'); await worker.start({ onUnhandledRequest: 'bypass', quiet: true }) }
+  if (!import.meta.env.VITE_API_BASE) { try { const { worker } = await import('./mocks/browser'); await worker.start({ onUnhandledRequest: 'bypass', quiet: true }) } catch (e) { console.error('mock service worker failed to start', e) } }
   createRoot(document.getElementById('root')!).render(<StrictMode><Root /></StrictMode>)
 }
 boot()

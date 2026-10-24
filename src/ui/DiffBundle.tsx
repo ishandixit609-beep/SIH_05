@@ -5,7 +5,7 @@ export function DiffRibbon({ diff }: { diff: any }) {
   return (
     <div className="slip ink rules dbl" data-no="RE-SUBMISSION DIFF · v1 to v2" style={{ borderRightStyle: 'solid' }}>
       <div style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', fontWeight: 700 }}>{diff.ribbon}</div>
-      <table className="ledger sm" style={{ marginTop: 6 }}><thead><tr><th>claim</th><th className="num">was</th><th className="num">now</th></tr></thead>
+      <table className="ledger sm tight" style={{ marginTop: 6 }}><thead><tr><th>claim</th><th className="num">was</th><th className="num">now</th></tr></thead>
         <tbody>{diff.changed.map((c: any) => <tr key={c.key}><td className="t">{c.key}</td><td className="num">{num(c.from)}</td><td className="num"><b>{num(c.to)}</b></td></tr>)}</tbody></table>
       <div className="xs dim" style={{ marginTop: 6 }}>Re-run only: {diff.rules_rerun.join(', ')}. Resolved: {diff.findings_resolved.join(', ')}. Still pending: {diff.findings_pending.join(', ')}.</div>
     </div>

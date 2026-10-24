@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { Loading } from '../ui/Loading'
 import { api, useApi } from '../api'
 import { AppCtx } from '../ctx'
 import { CalendarRail } from '../ui/CalendarRail'
@@ -52,7 +53,7 @@ export function Case() {
     }
     window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k)
   })
-  if (!cov.data || !fd.data || !tl.data || !cl.data) return <p className="t" style={{ paddingTop: 20 }}>Opening the case file…</p>
+  if (!cov.data || !fd.data || !tl.data || !cl.data) return <Loading label="Opening the case file…" apis={[cov, fd, tl, cl]} />
   const ev = cur?.evidence?.[0]; const box: Box | null = ev && ev.doc === doc.doc && ev.page === doc.page ? { field: cur.claims[0], text: ev.text, box: ev.box } : null
   const rule = cur ? rules.data?.rules.find((r: any) => r.id === cur.rule_id) ?? null : null
   const mine = fins.filter(f => f.req === cur?.req)

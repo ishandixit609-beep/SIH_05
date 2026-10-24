@@ -6,7 +6,8 @@ import { simulate, type Rule } from '../lib/rules'
 import type { CheckState } from '../lib/rung'
 import { DEMO_NOW } from '../lib/format'
 
-const fx = async (n: string) => (await fetch(`/fixtures/${n}.json`)).json()
+const cache = new Map<string, Promise<any>>()
+const fx = (n: string) => { if (!cache.has(n)) cache.set(n, fetch(`/fixtures/${n}.json`).then(r => r.json()).catch(e => { cache.delete(n); throw e })); return cache.get(n)! }
 const OFFICER = 'officer-1'
 // which requirement each finding belongs to (so clearing findings can clear the requirement)
 const REQ_OF: Record<string, string> = { 'F-011': 'R02', 'F-012': 'R02', 'F-013': 'R02', 'F-023': 'R02', 'F-014': 'R04', 'F-015': 'R04', 'F-016': 'R05',
@@ -17,11 +18,10 @@ let waivers: Waivers = {}
 const decided: Record<string, string> = {}       // findingId -> accept | dismiss | request_info
 let resubmitted = false
 let startedAt = Date.now()
-let booted = false
+let booting: Promise<void> | null = null
 
-async function boot() {
-  if (booted) return
-  booted = true
+function boot() { return (booting ??= seed()) }
+async function seed() {
   for (const [event, payload] of [['application.submitted', { app: 'APP-0001', version: '1' }], ['stage.read', { docs: '8', fields: '412' }], ['stage.check', { rules: '7', findings: '15' }]] as const)
     await append(chain, { ts: DEMO_NOW, actor: 'system', event, payload })
 }
@@ -107,7 +107,7 @@ export const handlers = [
   http.get('/api/audit', async () => { await boot(); return HttpResponse.json(chain) }),
   http.get('/api/audit/verify', async () => { await boot(); const b = await verify(chain); return HttpResponse.json({ intact: b === null, entries: chain.length, first_broken_seq: b, head: chain.at(-1)?.hash ?? '' }) }),
   http.post('/api/audit/_tamper', async () => { await boot(); if (chain[2]) chain[2].event = { ...chain[2].event, payload: { rules: '7', findings: '3' } }; return HttpResponse.json({ ok: true }) }),
-  http.post('/api/audit/_repair', async () => { chain.length = 0; booted = false; await boot(); return HttpResponse.json({ ok: true }) }),
+  http.post('/api/audit/_repair', async () => { chain.length = 0; booting = null; await boot(); return HttpResponse.json({ ok: true }) }),
   http.post('/api/rules/simulate', async ({ request }) => {
     const b = (await request.json()) as { rule_id: string; param: string; value: number }
     const [rules, peers]: [{ rules: Rule[] }, any[]] = await Promise.all([fx('rules'), fx('peers')])

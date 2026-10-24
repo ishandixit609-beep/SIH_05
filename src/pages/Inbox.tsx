@@ -9,6 +9,7 @@ import { Workflow, type Step } from '../ui/Workflow'
 import { useContext, useEffect, useState } from 'react'
 import { AppCtx } from '../ctx'
 import { num } from '../lib/format'
+import { Loading } from '../ui/Loading'
 
 export function Inbox() {
   const { lang } = useContext(AppCtx)
@@ -16,7 +17,7 @@ export function Inbox() {
   const cov = useApi<any>('/applications/APP-0001/coverage'); const ph = useApi<any>('/applications/APP-0001/photos')
   const [peers, setPeers] = useState<any[]>([]); const [pick, setPick] = useState<number | null>(null)
   useEffect(() => { fetch('/fixtures/peers.json').then(r => r.json()).then(setPeers).catch(() => setPeers([])) }, [])
-  if (!s.data || !c.data || !f.data) return <p className="t" style={{ paddingTop: 20 }}>Opening the docket…</p>
+  if (!s.data || !c.data || !f.data) return <Loading label="Opening the docket…" apis={[s, c, f]} />
   const fins: any[] = f.data.findings.filter((x: any) => !x.resolved)
   const unexplained = c.data.claims.filter((x: any) => x.bucket === 'CHANGED_NO_EXPLANATION')
   const red = fins.filter(x => x.state === 'FAILED'), amber = fins.filter(x => x.state !== 'FAILED' && !x.decision)
@@ -59,7 +60,7 @@ export function Inbox() {
       <div className="grid2" style={{ marginTop: 14, alignItems: 'start' }}>
         <div>
           <FoldStack claims={c.data.claims} sample={c.data.sample} />
-          <div className="card" style={{ marginTop: 14 }}><table className="ledger"><thead><tr><th>Delta tally · 80 claims</th><th className="num">n</th><th>what happens</th></tr></thead><tbody>
+          <div className="card" style={{ marginTop: 14 }}><table className="ledger tight"><thead><tr><th>Delta tally · 80 claims</th><th className="num">n</th><th>what happens</th></tr></thead><tbody>
             <tr><td className="t">UNCHANGED</td><td className="num">{counts.UNCHANGED}</td><td className="sm">folded, sampled, expiry re-tested</td></tr>
             <tr><td className="t">CHANGED, WITH EVIDENCE</td><td className="num">{counts.CHANGED_WITH_EVIDENCE}</td><td className="sm">checked against the supporting document</td></tr>
             <tr><td className="t" style={{ color: 'var(--stamp)' }}>CHANGED, NO EXPLANATION</td><td className="num"><b>{counts.CHANGED_NO_EXPLANATION}</b></td><td className="sm">red queue: needs the officer</td></tr>
