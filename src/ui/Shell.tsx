@@ -4,7 +4,7 @@ import { AppCtx, type Lang } from '../ctx'
 import { useApi } from '../api'
 import { dateTimeIST, DEMO_NOW } from '../lib/format'
 
-const NAV: [string, string][] = [['/', 'Docket'], ['/case', 'Case desk'], ['/institution/precheck', 'Pre-check'], ['/institution/fixes', 'Fixes'], ['/rules', 'Rule lab'], ['/alerts', 'Alerts'], ['/audit', 'Audit'], ['/eval', 'Results']]
+const NAV: [string, string][] = [['/', 'Docket'], ['/case', 'Case desk'], ['/institution/precheck', 'Pre-check'], ['/institution/fixes', 'Fixes'], ['/rules', 'Rule lab'], ['/alerts', 'Alerts'], ['/audit', 'Audit'], ['/eval', 'Results'], ['/about', 'Method']]
 
 export function Shell() {
   const { lang, setLang } = useContext(AppCtx)

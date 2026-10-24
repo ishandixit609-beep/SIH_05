@@ -8,7 +8,11 @@ export function TraceRibbon({ trace, onGraph }: { trace: string[]; onGraph: () =
   )
 }
 
-export function GraphModal({ trace, onClose }: { trace: string[]; onClose: () => void }) {
+import { useApi } from '../api'
+
+export function GraphModal({ trace, finding, onClose }: { trace: string[]; finding?: any; onClose: () => void }) {
+  const audit = useApi<any[]>('/audit')
+  const rows = (audit.data ?? []).filter(r => r.event?.payload?.finding && r.event.payload.finding === finding?.id)
   const kinds = ['rule version', 'rule', 'document page', 'claim', 'finding', 'next step']
   return (
     <>
@@ -26,6 +30,11 @@ export function GraphModal({ trace, onClose }: { trace: string[]; onClose: () =>
             </g>
           ))}
         </svg>
+        <div className="slip ink human" data-no="REVIEWER AUDIT TRAIL" style={{ borderRightStyle: 'solid', marginBottom: 10 }}>
+          <div className="xs">Rule version applied: <b className="t">{finding?.rule_version ?? 'n/a'}</b> · rule <b className="t">{finding?.rule_id ?? 'n/a'}</b></div>
+          {rows.length === 0 ? <div className="xs dim">No reviewer act recorded on this finding yet. Press Y, N or R on the case desk to record one.</div>
+            : <table className="ledger xs"><tbody>{rows.map(r => <tr key={r.seq}><td className="num">{r.seq}</td><td className="t">{r.event.actor}</td><td className="t">{r.event.event}</td><td className="t">{r.hash.slice(0, 10)}</td></tr>)}</tbody></table>}
+        </div>
         <button className="btn" onClick={onClose}>Close (Esc)</button>
       </div>
     </>

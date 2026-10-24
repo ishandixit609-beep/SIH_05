@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { api, useApi } from '../api'
 import { Stamp } from '../ui/Stamp'
 import { ChainFooter } from '../ui/ChainFooter'
+import { GuardLab } from '../ui/GuardLab'
+import { ReviewerTimer } from '../ui/ReviewerTimer'
+import { evidenceSummary, pct } from '../lib/evalmetrics'
 
 export function RuleLab() {
   const rules = useApi<any>('/rules')
@@ -25,6 +28,7 @@ export function RuleLab() {
           <div className="xs dim" style={{ marginTop: 6 }}>Replay re-runs the stored case under another rule version. The stored decision is untouched.</div></div>
         <div className="slip" data-no="RULES IN eoa_v1" style={{ borderRightStyle: 'solid' }}>{rules.data?.rules.map((r: any) => <div key={r.id} className="row between sm" style={{ padding: '3px 0', borderBottom: '1px dotted var(--rule)' }}><span className="t">{r.id}</span><span className="xs dim">{r.severity} · rung {r.required_rung} · {r.clause.doc} ref {r.clause.ref}</span></div>)}</div>
       </div>
+      <GuardLab />
     </main>
   )
 }
@@ -48,14 +52,18 @@ export function AuditPage() {
 }
 
 export function Results() {
-  const r = useApi<any>('/eval/summary')
+  const r = useApi<any>('/eval/summary'); const fd = useApi<any>('/findings')
   if (!r.data) return <p className="t" style={{ paddingTop: 20 }}>Counting…</p>
   return (
     <main style={{ paddingTop: 18 }}><div className="t xs up dim">Measured results · computed from ground_truth.json when this page loads</div><h1 style={{ fontSize: '1.8rem' }}>What the system found, against what was planted</h1>
       <div className="row" style={{ gap: 30, margin: '16px 0' }}>
         <div><div style={{ font: '700 3rem var(--serif)' }}>{r.data.found}<span className="dim" style={{ fontSize: '1.6rem' }}> / {r.data.planted}</span></div><div className="xs t dim">planted issues found</div></div>
-        <div><div style={{ font: '700 3rem var(--serif)' }}>{r.data.false_positives}</div><div className="xs t dim">valid-but-unusual documents wrongly failed</div></div></div>
+        <div><div style={{ font: '700 3rem var(--serif)' }}>{r.data.false_positives}</div><div className="xs t dim">valid-but-unusual documents wrongly failed</div></div>
+        <div><div style={{ font: '700 3rem var(--serif)' }}>{pct(r.data.found, r.data.planted)}<span className="dim" style={{ fontSize: '1.6rem' }}> %</span></div><div className="xs t dim">recall on planted issues</div></div>
+        {fd.data && (() => { const e = evidenceSummary(fd.data.findings); return <div><div style={{ font: '700 3rem var(--serif)' }}>{e.complete}<span className="dim" style={{ fontSize: '1.6rem' }}> / {e.total}</span></div><div className="xs t dim">findings with a document page, rule version and trace</div></div> })()}</div>
       <table className="ledger sm"><thead><tr><th>id</th><th>planted problem</th><th>finding</th><th>result</th></tr></thead><tbody>
         {r.data.rows.map((p: any) => <tr key={p.id}><td className="t">{p.id}</td><td>{p.what}</td><td className="t">{p.expect_finding}</td><td><Stamp state={p.found ? 'PASSED' : 'FAILED'} /></td></tr>)}</tbody></table>
+      {fd.data && (() => { const e = evidenceSummary(fd.data.findings); return e.missing.length > 0 && <p className="xs dim" style={{ maxWidth: 700, marginTop: 10 }}>Findings without a page-level evidence box: <span className="t">{e.missing.join(', ')}</span>. These come from network, anomaly or source-status checks, where the proof is a record or a status rather than one page. Showing this gap is deliberate.</p> })()}
+      <ReviewerTimer />
       <p className="xs dim" style={{ maxWidth: 660, marginTop: 12 }}>Synthetic results show that the workflow is correct. They are not a claim about accuracy on real institutions.</p></main>)
 }

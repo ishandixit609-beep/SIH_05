@@ -1,0 +1,40 @@
+{
+ "label": "F-7731",
+ "token": "21c5519ddbbced3d",
+ "nodes": [
+  {
+   "id": "SYN-PUNE-0001",
+   "name": "Shri Vidya Institute of Engineering & Technology, Pune"
+  },
+  {
+   "id": "SYN-SANGLI-0017",
+   "name": "Krishna Valley College of Engineering, Sangli"
+  }
+ ],
+ "edges": [
+  {
+   "institution": "SYN-PUNE-0001",
+   "from": "2025-04-01",
+   "to": null,
+   "kind": "full_time"
+  },
+  {
+   "institution": "SYN-SANGLI-0017",
+   "from": "2026-01-05",
+   "to": null,
+   "kind": "full_time"
+  }
+ ],
+ "overlaps": [
+  {
+   "token": "21c5519ddbbced3d",
+   "institutions": [
+    "SYN-PUNE-0001",
+    "SYN-SANGLI-0017"
+   ],
+   "overlap_from": "2026-01-05",
+   "overlap_to": null,
+   "label": "Possible overlap, needs human confirmation"
+  }
+ ]
+}

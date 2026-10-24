@@ -23,6 +23,20 @@ afterEach(() => cleanup())
 const wrap = (el: JSX.Element, path = '/') => render(
   <AppCtx.Provider value={{ rev: 0, bump: () => {}, lang: 'en', setLang: () => {}, say: () => {} }}><MemoryRouter initialEntries={[path]}><Routes><Route path="*" element={el} /></Routes></MemoryRouter></AppCtx.Provider>)
 
+describe('PS5 additions render against the mock API', () => {
+  it('Rule lab hosts the guard lab: one manual-only check withholds the overall state', async () => {
+    wrap(<RuleLab />); expect(await screen.findByText(/Click a check to change its state/)).toBeTruthy()
+    expect(screen.getByText('Ready for decision')).toBeTruthy()
+    fireEvent.click(screen.getByText('make Accreditation manual-only'))
+    expect(await screen.findByText('Review incomplete')).toBeTruthy()
+  })
+  it('Fixes shows a live number check; Results shows recall, evidence completeness and the timer', async () => {
+    wrap(<Fixes />); expect(await screen.findByText(/number check passed/)).toBeTruthy(); expect(screen.getAllByText(/Why it matters/).length).toBeGreaterThan(0)
+    cleanup(); wrap(<Results />); expect(await screen.findByText(/recall on planted issues/)).toBeTruthy()
+    expect(await screen.findByText(/findings with a document page, rule version and trace/)).toBeTruthy(); expect(screen.getByText(/Task for the volunteer/)).toBeTruthy()
+  })
+})
+
 describe('pages render with the mock API', () => {
   it('Inbox shows the honest fold stack and the red queue', async () => {
     wrap(<Inbox />); expect(await screen.findByText(/carried forward, not re-read/)).toBeTruthy()

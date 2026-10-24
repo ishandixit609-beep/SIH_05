@@ -134,3 +134,12 @@ textarea, input[type=text] { width: 100%; border: 1px solid var(--ink); backgrou
 .tick { display: inline-block; width: 17px; height: 17px; border: 1.5px solid var(--ink); margin-right: 8px; vertical-align: -3px; text-align: center; line-height: 12px; font-size: .8rem; }
 .tick.on { background: var(--ink); color: var(--paper-hi); } .tick.gap { border-color: var(--stamp); color: var(--stamp); }
 @media (max-width: 1180px) { .desk { grid-template-columns: 1fr; } .col-sticky { position: static; max-height: none; } .grid2 { grid-template-columns: 1fr; } }
+
+/* ---------- guard lab, fix journey, timer ---------- */
+.guardgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin-top: 12px; }
+.guardcell { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; padding: 9px 11px; background: var(--paper); border: 1px solid var(--ink); }
+.guardcell:hover { background: var(--paper-hi); }
+.journey { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; font: .76rem var(--type); }
+.journey span { padding: 1px 7px; border: 1px solid var(--rule); color: var(--ink-2); }
+.journey span.on { border-color: var(--ink); color: var(--ink); background: var(--paper); font-weight: 600; }
+select { font: inherit; padding: 5px 8px; border: 1px solid var(--ink); background: var(--paper-hi); }

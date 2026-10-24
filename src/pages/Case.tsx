@@ -85,7 +85,7 @@ export function Case() {
       </div>
       <ChainFooter />
       <ClauseDrawer f={clause ? cur : null} rule={rule} onClose={() => setClause(false)} />
-      {graph && <GraphModal trace={trace} onClose={() => setGraph(false)} />}
+      {graph && <GraphModal trace={trace} finding={cur} onClose={() => setGraph(false)} />}
       {waive && <WaiveModal checkId={waive} onSubmit={submitWaiver} onClose={() => setWaive(null)} />}
     </main>
   )

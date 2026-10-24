@@ -1,4 +1,5 @@
 import { dateIN, num } from '../lib/format'
+import { NumberBadge } from './NumberBadge'
 
 export function DiffRibbon({ diff }: { diff: any }) {
   return (
@@ -19,7 +20,7 @@ export function BundleCard({ b, fins, lang }: { b: any; fins: any[]; lang: 'en' 
       <div className="inner">{kids.map(k => <div key={k.id} className="t xs" style={{ padding: '2px 0', borderBottom: '1px dotted var(--rule)' }}>{k.id} {k.explanation.slice(0, 92)}…</div>)}</div>
       <div className="xs" style={{ marginTop: 8 }}><b>Cheapest next step:</b> {b.top_action.kind.replace(/_/g, ' ')} (cost {b.top_action.cost}). {b.top_action.why}.</div>
       <div className="slip ink ai" style={{ marginTop: 8, borderRightStyle: 'solid' }}><span className="who ai">AI-drafted · numbers checked · officer sends</span>
-        <div className="sm" style={{ marginTop: 4 }}>{LETTER[lang] ?? b.letter_en}</div></div>
+        <div className="sm" style={{ marginTop: 4 }}>{LETTER[lang] ?? b.letter_en}</div><NumberBadge text={LETTER[lang] ?? b.letter_en} fins={kids} /></div>
     </div>
   )
 }

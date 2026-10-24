@@ -5,11 +5,14 @@
 React + Vite + TypeScript. No UI kit, no Tailwind: the look is hand-built in `src/styles.css`
 (khadi paper, manila folders, docket slips with a torn-stub edge, rubber stamps with rough ink, evidence ladder, hard offsets, no gradients, no rounded SaaS cards).
 
+## Coverage against the SIH PS3+PS5 deck
+See `docs/FEATURE_COVERAGE.md` for what is built, what was added, how each is verified, and the honest to-do list.
+
 ## Run
 ```bash
 npm install
 npm run dev          # http://localhost:5173  (mock backend is ON)
-npm test             # 19 tests: golden vectors, rule parity, every page rendered against the mock API, full officer flow
+npm test             # 27 tests: golden vectors, rule parity, every page rendered against the mock API, full officer flow, PS5 additions
 npm run build        # type-check + production build
 ```
 

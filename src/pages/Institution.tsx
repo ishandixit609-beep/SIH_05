@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { api, useApi } from '../api'
 import { AppCtx } from '../ctx'
 import { DiffRibbon, LETTER } from '../ui/DiffBundle'
+import { NumberBadge } from '../ui/NumberBadge'
+import { FixNote } from '../ui/FixNote'
 
 const GAPS: Record<string, string> = { R05: 'Fire NOC ends 30 Sep 2027, inside the odd semester. Upload the renewed NOC or the renewal receipt.', R10: 'Three of six photos carry no location data. Upload geo-tagged photographs.' }
 
@@ -45,9 +47,9 @@ export function Fixes() {
     <main style={{ paddingTop: 18 }}>
       <div className="t xs up dim">Institution desk · requests from the officer</div><h1 style={{ fontSize: '1.8rem' }}>What we need from you</h1>
       <p className="sm dim" style={{ maxWidth: 680 }}>Three findings about the trust name share one cause, so you receive one request. Use the language switch at the top right to read it in हिन्दी or मराठी.</p>
-      <div className="slip ink ai" data-no="MESSAGE FROM THE REVIEWER" style={{ marginTop: 14, borderRightStyle: 'solid' }}><span className="who ai">drafted by AI, numbers checked, sent by the officer</span><div style={{ marginTop: 6 }}>{LETTER[lang]}</div></div>
+      <div className="slip ink ai" data-no="MESSAGE FROM THE REVIEWER" style={{ marginTop: 14, borderRightStyle: 'solid' }}><span className="who ai">drafted by AI, numbers checked, sent by the officer</span><div style={{ marginTop: 6 }}>{LETTER[lang]}</div><NumberBadge text={LETTER[lang]} fins={fins} /></div>
       <div className="stack" style={{ marginTop: 16 }}>{items.map(([id, t, canUpload]) => (
-        <div key={id} className="slip" data-no={id} style={{ borderRightStyle: 'solid' }}><div className="row between"><span>{t}</span>
+        <div key={id} className="slip" data-no={id} style={{ borderRightStyle: 'solid' }}><div className="row between"><span>{t}<FixNote f={fins.find(x => x.id === id)} resolved={!!res(id)} /></span>
           {res(id) ? <span className="stamp PASSED">resolved</span> : canUpload ? <button className="btn dark" onClick={upload}>Upload corrected area statement</button> : <span className="xs dim">upload slot (demo: not wired)</span>}</div></div>))}</div>
       {diff && <div style={{ marginTop: 18 }}><DiffRibbon diff={diff} /></div>}
     </main>

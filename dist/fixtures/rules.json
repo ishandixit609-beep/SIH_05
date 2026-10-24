@@ -1,0 +1,301 @@
+{
+ "version": "eoa_v1",
+ "sha256": "30befa3cd021c0c617005d302fedb906c36788fb356e1a9d72d336d53efa1b54",
+ "rules": [
+  {
+   "id": "AREA_PER_SEAT",
+   "title": "Built-up area per seat",
+   "inputs": [
+    "intake.total",
+    "area.built_up_sqm"
+   ],
+   "params": {
+    "min_sqm_per_seat": 4.0
+   },
+   "severity": "high",
+   "required_rung": 2,
+   "clause": {
+    "doc": "APH 2024-27",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Built-up area per seat is {value:.1f} sq m; configured norm is {min_sqm_per_seat} (illustrative).",
+   "value": {
+    "t": "bin",
+    "op": "/",
+    "l": {
+     "t": "ref",
+     "p": "area.built_up_sqm"
+    },
+    "r": {
+     "t": "ref",
+     "p": "intake.total"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": ">=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "ref",
+     "p": "params.min_sqm_per_seat"
+    }
+   }
+  },
+  {
+   "id": "STUDENTS_PER_FACULTY",
+   "title": "Students per faculty",
+   "inputs": [
+    "intake.total",
+    "faculty.count"
+   ],
+   "params": {
+    "max_ratio": 20.0
+   },
+   "severity": "medium",
+   "required_rung": 1,
+   "clause": {
+    "doc": "APH 2024-27",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Intake per faculty member is {value:.1f}; configured ceiling is {max_ratio} (illustrative).",
+   "value": {
+    "t": "bin",
+    "op": "/",
+    "l": {
+     "t": "ref",
+     "p": "intake.total"
+    },
+    "r": {
+     "t": "ref",
+     "p": "faculty.count"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": "<=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "ref",
+     "p": "params.max_ratio"
+    }
+   }
+  },
+  {
+   "id": "FIRE_NOC_COVERS_SEMESTER",
+   "title": "Fire NOC valid through end of odd semester",
+   "inputs": [
+    "fire_noc.valid_till_ord",
+    "semester.odd_end_ord"
+   ],
+   "params": {},
+   "severity": "high",
+   "required_rung": 1,
+   "clause": {
+    "doc": "State fire-safety law / APH 2024-27",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Fire NOC ends {value:.0f} days relative to semester end; must be zero or more.",
+   "value": {
+    "t": "bin",
+    "op": "-",
+    "l": {
+     "t": "ref",
+     "p": "fire_noc.valid_till_ord"
+    },
+    "r": {
+     "t": "ref",
+     "p": "semester.odd_end_ord"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": ">=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "num",
+     "v": 0
+    }
+   }
+  },
+  {
+   "id": "CARPET_TO_BUILTUP",
+   "title": "Carpet area is a plausible share of built-up area",
+   "inputs": [
+    "area.carpet_sqm",
+    "area.built_up_sqm"
+   ],
+   "params": {
+    "max_ratio": 0.85
+   },
+   "severity": "medium",
+   "required_rung": 1,
+   "clause": {
+    "doc": "APH 2024-27",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Carpet area is {value:.2f} of built-up area; configured ceiling is {max_ratio} (illustrative).",
+   "value": {
+    "t": "bin",
+    "op": "/",
+    "l": {
+     "t": "ref",
+     "p": "area.carpet_sqm"
+    },
+    "r": {
+     "t": "ref",
+     "p": "area.built_up_sqm"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": "<=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "ref",
+     "p": "params.max_ratio"
+    }
+   }
+  },
+  {
+   "id": "FLOORS_WITHIN_NOC",
+   "title": "Floors built do not exceed floors on the fire NOC",
+   "inputs": [
+    "building.floors",
+    "fire_noc.max_floors"
+   ],
+   "params": {},
+   "severity": "medium",
+   "required_rung": 1,
+   "clause": {
+    "doc": "State fire-safety law",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Fire NOC allows {value:.0f} more floors than built; must be zero or more.",
+   "value": {
+    "t": "bin",
+    "op": "-",
+    "l": {
+     "t": "ref",
+     "p": "fire_noc.max_floors"
+    },
+    "r": {
+     "t": "ref",
+     "p": "building.floors"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": ">=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "num",
+     "v": 0
+    }
+   }
+  },
+  {
+   "id": "LAB_AREA_PER_LAB",
+   "title": "Average lab area",
+   "inputs": [
+    "lab.count",
+    "area.lab_sqm"
+   ],
+   "params": {
+    "min_sqm_per_lab": 60.0
+   },
+   "severity": "low",
+   "required_rung": 1,
+   "clause": {
+    "doc": "APH 2024-27",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Average lab area is {value:.1f} sq m; configured minimum is {min_sqm_per_lab} (illustrative).",
+   "value": {
+    "t": "bin",
+    "op": "/",
+    "l": {
+     "t": "ref",
+     "p": "area.lab_sqm"
+    },
+    "r": {
+     "t": "ref",
+     "p": "lab.count"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": ">=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "ref",
+     "p": "params.min_sqm_per_lab"
+    }
+   }
+  },
+  {
+   "id": "BUILTUP_WITHIN_SANCTIONED_PLAN",
+   "title": "Built-up area does not exceed the municipal sanctioned plan",
+   "inputs": [
+    "area.built_up_sqm",
+    "area.sanctioned_plan_sqm"
+   ],
+   "params": {},
+   "severity": "medium",
+   "required_rung": 2,
+   "clause": {
+    "doc": "Local body sanctioned plan",
+    "ref": "TBD",
+    "page": null
+   },
+   "message": "Sanctioned plan allows {value:.0f} sq m more than built-up; must be zero or more.",
+   "value": {
+    "t": "bin",
+    "op": "-",
+    "l": {
+     "t": "ref",
+     "p": "area.sanctioned_plan_sqm"
+    },
+    "r": {
+     "t": "ref",
+     "p": "area.built_up_sqm"
+    }
+   },
+   "expr": {
+    "t": "cmp",
+    "op": ">=",
+    "l": {
+     "t": "ref",
+     "p": "value"
+    },
+    "r": {
+     "t": "num",
+     "v": 0
+    }
+   }
+  }
+ ]
+}
