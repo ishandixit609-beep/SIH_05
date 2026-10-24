@@ -57,7 +57,7 @@ export function Case() {
 
   return (
     <main style={{ paddingTop: 12 }}>
-      <div className="grid2" style={{ gridTemplateColumns: 'minmax(0,1fr) 380px', alignItems: 'start' }}>
+      <div className="grid2" style={{ gridTemplateColumns: 'minmax(0,1fr) minmax(0,520px)', alignItems: 'start', gap: 40 }}>
         <div><div className="t xs up dim">Case desk · APP-0001 · version {cov.data.requirements.some((r: any) => r.reason === 'ok_after_resubmission') ? 2 : 1}</div>
           <h2 style={{ fontSize: '1.35rem', margin: '2px 0 6px' }}>Shri Vidya Institute of Engineering &amp; Technology, Pune</h2><CalendarRail tl={tl.data} /></div>
         <SealSlot cov={cov.data} onWaive={setWaive} onDone={m => { say(m); bump() }} />
