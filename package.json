@@ -10,6 +10,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.22",
+    "leaflet": "^1.9.4",
     "msw": "^2.6.0",
     "pdfjs-dist": "^4.8.69",
     "react": "^18.3.1",

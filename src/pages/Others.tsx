@@ -5,10 +5,12 @@ import { ChainFooter } from '../ui/ChainFooter'
 import { GuardLab } from '../ui/GuardLab'
 import { ReviewerTimer } from '../ui/ReviewerTimer'
 import { evidenceSummary, pct } from '../lib/evalmetrics'
+import { Histogram, Donut, RatioBars, Legend } from '../ui/Charts'
 
 export function RuleLab() {
   const rules = useApi<any>('/rules')
-  const [v, setV] = useState(4.0); const [res, setRes] = useState<any>(null); const [rp2, setRp] = useState<any>(null)
+  const [v, setV] = useState(4.0); const [res, setRes] = useState<any>(null); const [rp2, setRp] = useState<any>(null); const [seat, setSeat] = useState<number[]>([])
+  useEffect(() => { fetch('/fixtures/peers.json').then(r => r.json()).then((p: any[]) => setSeat(p.map(x => x.claims['area.built_up_sqm'] / x.claims['intake.total']).filter(n => isFinite(n)))).catch(() => setSeat([])) }, [])
   useEffect(() => { const t = setTimeout(() => api('/rules/simulate', { method: 'POST', json: { rule_id: 'AREA_PER_SEAT', param: 'min_sqm_per_seat', value: v } }).then(setRes), 60); return () => clearTimeout(t) }, [v])
   return (
     <main style={{ paddingTop: 18 }}>
@@ -17,6 +19,7 @@ export function RuleLab() {
         <div className="row between"><span>Minimum built-up area per seat</span><b className="t" style={{ fontSize: '1.6rem' }}>{v.toFixed(1)} sq m</b></div>
         <input type="range" min="2" max="7" step="0.1" value={v} onChange={e => setV(+e.target.value)} style={{ width: '100%', accentColor: 'var(--ink)' }} aria-label="Minimum area per seat" />
         <div className="row between xs t dim"><span>2.0</span><span>current rule 4.0 (illustrative)</span><span>7.0</span></div>
+        {seat.length > 0 && <div className="chartbox" style={{ marginTop: 14 }}><Histogram values={seat} marker={v} label="built-up sq m per seat, peer institutions (red = below the current rule)" /></div>}
         {res && <div style={{ marginTop: 10 }}><span style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem' }}>{res.count} of {res.total}</span> <span className="sm">peer institutions would change status. Nothing is applied.</span>
           <div className="t xs dim" style={{ marginTop: 4 }}>{res.first10.join('  ') || 'no change at this value'}</div></div>}
       </div>
@@ -46,6 +49,7 @@ export function AuditPage() {
   const l = useApi<any[]>('/audit')
   return (
     <main style={{ paddingTop: 18 }}><div className="t xs up dim">Audit · hash chain</div><h1 style={{ fontSize: '1.8rem' }}>Every act, in order, sealed to the one before it</h1>
+      <div className="chain" aria-label="Hash chain, latest entries">{l.data?.slice(-10).map(e => <span key={e.seq} title={e.hash}>#{e.seq} · {e.hash.slice(0, 6)}</span>)}</div>
       <table className="ledger sm" style={{ marginTop: 14 }}><thead><tr><th className="num">seq</th><th>actor</th><th>event</th><th>hash (first 16)</th></tr></thead><tbody>
         {l.data?.map(e => <tr key={e.seq}><td className="num">{e.seq}</td><td className="t">{e.event.actor}</td><td className="t">{e.event.event}</td><td className="t xs">{e.hash.slice(0, 16)}</td></tr>)}</tbody></table>
       <ChainFooter /></main>)
@@ -61,6 +65,10 @@ export function Results() {
         <div><div style={{ font: '700 3rem var(--serif)' }}>{r.data.false_positives}</div><div className="xs t dim">valid-but-unusual documents wrongly failed</div></div>
         <div><div style={{ font: '700 3rem var(--serif)' }}>{pct(r.data.found, r.data.planted)}<span className="dim" style={{ fontSize: '1.6rem' }}> %</span></div><div className="xs t dim">recall on planted issues</div></div>
         {fd.data && (() => { const e = evidenceSummary(fd.data.findings); return <div><div style={{ font: '700 3rem var(--serif)' }}>{e.complete}<span className="dim" style={{ fontSize: '1.6rem' }}> / {e.total}</span></div><div className="xs t dim">findings with a document page, rule version and trace</div></div> })()}</div>
+      <div className="grid2" style={{ margin: '4px 0 16px' }}>
+        <div className="card"><h4>Planted issues, found vs missed</h4><div className="donutrow"><Donut center={`${pct(r.data.found, r.data.planted)}%`} sub="recall" parts={[{ label: 'found', value: r.data.found, color: 'var(--rules)' }, { label: 'missed', value: r.data.planted - r.data.found, color: 'var(--stamp)' }]} /><Legend parts={[{ label: 'found', value: r.data.found, color: 'var(--rules)' }, { label: 'missed', value: r.data.planted - r.data.found, color: 'var(--stamp)' }, { label: 'valid documents wrongly failed', value: r.data.false_positives, color: 'var(--warn)' }]} /></div></div>
+        <div className="card"><h4>Coverage of the evidence trail</h4>{fd.data && (() => { const e = evidenceSummary(fd.data.findings); return <RatioBars rows={[{ label: 'issues caught out of those planted', a: r.data.found, b: r.data.planted }, { label: 'findings with page, rule version and trace', a: e.complete, b: e.total }]} /> })()}</div>
+      </div>
       <table className="ledger sm"><thead><tr><th>id</th><th>planted problem</th><th>finding</th><th>result</th></tr></thead><tbody>
         {r.data.rows.map((p: any) => <tr key={p.id}><td className="t">{p.id}</td><td>{p.what}</td><td className="t">{p.expect_finding}</td><td><Stamp state={p.found ? 'PASSED' : 'FAILED'} /></td></tr>)}</tbody></table>
       {fd.data && (() => { const e = evidenceSummary(fd.data.findings); return e.missing.length > 0 && <p className="xs dim" style={{ maxWidth: 700, marginTop: 10 }}>Findings without a page-level evidence box: <span className="t">{e.missing.join(', ')}</span>. These come from network, anomaly or source-status checks, where the proof is a record or a status rather than one page. Showing this gap is deliberate.</p> })()}

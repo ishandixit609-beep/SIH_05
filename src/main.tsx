@@ -9,6 +9,7 @@ import { Case } from './pages/Case'
 import { Precheck, Fixes } from './pages/Institution'
 import { RuleLab, Alerts, AuditPage, Results } from './pages/Others'
 import { About } from './pages/About'
+import { AuthPage } from './pages/Auth'
 
 function Root() {
   const [rev, setRev] = useState(0); const [lang, setLang] = useState<Lang>('en'); const [msg, setMsg] = useState('')
@@ -18,7 +19,7 @@ function Root() {
   return (
     <AppCtx.Provider value={v}>
       <BrowserRouter>
-        <Routes><Route element={<Shell />}>
+        <Routes><Route path="signin" element={<AuthPage />} /><Route element={<Shell />}>
           <Route index element={<Inbox />} /><Route path="case" element={<Case />} />
           <Route path="institution/precheck" element={<Precheck />} /><Route path="institution/fixes" element={<Fixes />} />
           <Route path="rules" element={<RuleLab />} /><Route path="alerts" element={<Alerts />} /><Route path="audit" element={<AuditPage />} /><Route path="eval" element={<Results />} /><Route path="about" element={<About />} />

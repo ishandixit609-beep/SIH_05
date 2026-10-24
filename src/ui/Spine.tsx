@@ -6,12 +6,12 @@ import { dateIN } from '../lib/format'
 export function Spine({ cov, fins, sel, onPick }: { cov: any; fins: any[]; sel: string | null; onPick: (reqId: string, doc: string, page: number) => void }) {
   const math: Record<string, string> = { R04: '3.0 sq m per seat vs 4.0 (illustrative)', R05: 'ends 30 Sep 2027, semester ends 18 Dec 2027', R08: '58 to 83, no declared change' }
   return (
-    <div className="slip" data-no="REQUIREMENT SPINE" style={{ padding: 0, borderRightStyle: 'solid' }}>
+    <div className="slip flush" data-no="REQUIREMENT SPINE">
       {cov.requirements.map((r: any) => {
         const st = r.waived ? 'PASSED' : r.state
         return (
           <button key={r.id} onClick={() => onPick(r.id, r.doc, r.page)} className={r.id === sel ? 'sel' : ''}
-            style={{ display: 'block', width: '100%', textAlign: 'left', background: r.id === sel ? 'var(--manila)' : 'transparent', border: 'none', borderBottom: '1px solid var(--rule)', padding: '8px 10px' }}>
+            style={{ display: 'block', width: '100%', textAlign: 'left', background: r.id === sel ? 'var(--manila)' : 'transparent', border: 'none', borderBottom: '1px solid var(--rule)', padding: '9px 18px' }}>
             <div className="row between"><span><b className="t sm">{r.id}</b> <span className="sm">{r.title}</span></span><Stamp state={r.conflict ? 'CONFLICT' : st} /></div>
             <div className="row between xs dim" style={{ marginTop: 3 }}>
               <span className="t">{r.doc} p.{r.page}</span><Ladder rung={r.rung} need={Math.min(r.required_rung, 3)} conflict={r.conflict} />
