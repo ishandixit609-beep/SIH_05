@@ -1,0 +1,322 @@
+[
+ {
+  "id": "SYN-MH-0002",
+  "claims": {
+   "intake.total": 240,
+   "area.built_up_sqm": 1170,
+   "faculty.count": 16
+  }
+ },
+ {
+  "id": "SYN-MH-0003",
+  "claims": {
+   "intake.total": 540,
+   "area.built_up_sqm": 2302,
+   "faculty.count": 31
+  }
+ },
+ {
+  "id": "SYN-MH-0004",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 2875,
+   "faculty.count": 36
+  }
+ },
+ {
+  "id": "SYN-MH-0005",
+  "claims": {
+   "intake.total": 480,
+   "area.built_up_sqm": 2336,
+   "faculty.count": 28
+  }
+ },
+ {
+  "id": "SYN-MH-0006",
+  "claims": {
+   "intake.total": 480,
+   "area.built_up_sqm": 2677,
+   "faculty.count": 28
+  }
+ },
+ {
+  "id": "SYN-MH-0007",
+  "claims": {
+   "intake.total": 360,
+   "area.built_up_sqm": 2259,
+   "faculty.count": 20
+  }
+ },
+ {
+  "id": "SYN-MH-0008",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 3578,
+   "faculty.count": 45
+  }
+ },
+ {
+  "id": "SYN-MH-0009",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 1748,
+   "faculty.count": 28
+  }
+ },
+ {
+  "id": "SYN-MH-0010",
+  "claims": {
+   "intake.total": 360,
+   "area.built_up_sqm": 2010,
+   "faculty.count": 35
+  }
+ },
+ {
+  "id": "SYN-MH-0011",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 1751,
+   "faculty.count": 27
+  }
+ },
+ {
+  "id": "SYN-MH-0012",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 1782,
+   "faculty.count": 37
+  }
+ },
+ {
+  "id": "SYN-MH-0013",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 2415,
+   "faculty.count": 30
+  }
+ },
+ {
+  "id": "SYN-MH-0014",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 2938,
+   "faculty.count": 43
+  }
+ },
+ {
+  "id": "SYN-MH-0015",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 3233,
+   "faculty.count": 37
+  }
+ },
+ {
+  "id": "SYN-MH-0016",
+  "claims": {
+   "intake.total": 480,
+   "area.built_up_sqm": 3060,
+   "faculty.count": 25
+  }
+ },
+ {
+  "id": "SYN-MH-0017",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 2259,
+   "faculty.count": 36
+  }
+ },
+ {
+  "id": "SYN-MH-0018",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 3024,
+   "faculty.count": 33
+  }
+ },
+ {
+  "id": "SYN-MH-0019",
+  "claims": {
+   "intake.total": 240,
+   "area.built_up_sqm": 1185,
+   "faculty.count": 20
+  }
+ },
+ {
+  "id": "SYN-MH-0020",
+  "claims": {
+   "intake.total": 540,
+   "area.built_up_sqm": 2531,
+   "faculty.count": 43
+  }
+ },
+ {
+  "id": "SYN-MH-0021",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 1943,
+   "faculty.count": 26
+  }
+ },
+ {
+  "id": "SYN-MH-0022",
+  "claims": {
+   "intake.total": 360,
+   "area.built_up_sqm": 1271,
+   "faculty.count": 28
+  }
+ },
+ {
+  "id": "SYN-MH-0023",
+  "claims": {
+   "intake.total": 540,
+   "area.built_up_sqm": 2566,
+   "faculty.count": 35
+  }
+ },
+ {
+  "id": "SYN-MH-0024",
+  "claims": {
+   "intake.total": 540,
+   "area.built_up_sqm": 2639,
+   "faculty.count": 33
+  }
+ },
+ {
+  "id": "SYN-MH-0025",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 2007,
+   "faculty.count": 27
+  }
+ },
+ {
+  "id": "SYN-MH-0026",
+  "claims": {
+   "intake.total": 540,
+   "area.built_up_sqm": 2285,
+   "faculty.count": 31
+  }
+ },
+ {
+  "id": "SYN-MH-0027",
+  "claims": {
+   "intake.total": 360,
+   "area.built_up_sqm": 1155,
+   "faculty.count": 24
+  }
+ },
+ {
+  "id": "SYN-MH-0028",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 2092,
+   "faculty.count": 21
+  }
+ },
+ {
+  "id": "SYN-MH-0029",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 2073,
+   "faculty.count": 23
+  }
+ },
+ {
+  "id": "SYN-MH-0030",
+  "claims": {
+   "intake.total": 300,
+   "area.built_up_sqm": 1178,
+   "faculty.count": 22
+  }
+ },
+ {
+  "id": "SYN-MH-0031",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 2720,
+   "faculty.count": 32
+  }
+ },
+ {
+  "id": "SYN-MH-0032",
+  "claims": {
+   "intake.total": 480,
+   "area.built_up_sqm": 1974,
+   "faculty.count": 33
+  }
+ },
+ {
+  "id": "SYN-MH-0033",
+  "claims": {
+   "intake.total": 540,
+   "area.built_up_sqm": 2328,
+   "faculty.count": 40
+  }
+ },
+ {
+  "id": "SYN-MH-0034",
+  "claims": {
+   "intake.total": 600,
+   "area.built_up_sqm": 3204,
+   "faculty.count": 36
+  }
+ },
+ {
+  "id": "SYN-MH-0035",
+  "claims": {
+   "intake.total": 300,
+   "area.built_up_sqm": 1260,
+   "faculty.count": 23
+  }
+ },
+ {
+  "id": "SYN-MH-0036",
+  "claims": {
+   "intake.total": 300,
+   "area.built_up_sqm": 1733,
+   "faculty.count": 20
+  }
+ },
+ {
+  "id": "SYN-MH-0037",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 1894,
+   "faculty.count": 24
+  }
+ },
+ {
+  "id": "SYN-MH-0038",
+  "claims": {
+   "intake.total": 480,
+   "area.built_up_sqm": 1525,
+   "faculty.count": 33
+  }
+ },
+ {
+  "id": "SYN-MH-0039",
+  "claims": {
+   "intake.total": 480,
+   "area.built_up_sqm": 2606,
+   "faculty.count": 40
+  }
+ },
+ {
+  "id": "SYN-MH-0040",
+  "claims": {
+   "intake.total": 420,
+   "area.built_up_sqm": 2305,
+   "faculty.count": 22
+  }
+ },
+ {
+  "id": "SYN-MH-0041",
+  "claims": {
+   "intake.total": 360,
+   "area.built_up_sqm": 1755,
+   "faculty.count": 25
+  }
+ }
+]

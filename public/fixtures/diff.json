@@ -1,0 +1,35 @@
+{
+ "from": 1,
+ "to": 2,
+ "changed": [
+  {
+   "key": "area.built_up_sqm",
+   "from": 1800,
+   "to": 2400
+  },
+  {
+   "key": "area.carpet_sqm",
+   "from": 1720,
+   "to": 2000
+  },
+  {
+   "key": "area.lab_sqm",
+   "from": 1100,
+   "to": 1300
+  }
+ ],
+ "rules_rerun": [
+  "AREA_PER_SEAT",
+  "CARPET_TO_BUILTUP",
+  "LAB_AREA_PER_LAB",
+  "BUILTUP_WITHIN_SANCTIONED_PLAN"
+ ],
+ "findings_resolved": [
+  "F-014",
+  "F-015"
+ ],
+ "findings_pending": [
+  "F-016"
+ ],
+ "ribbon": "3 values changed, 2 findings resolved, 1 pending; 4 dependent checks re-run"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "APP-0001",
+ "institution": {
+  "id": "SYN-PUNE-0001",
+  "name": "Shri Vidya Institute of Engineering & Technology, Pune",
+  "state": "Maharashtra",
+  "fictional": true
+ },
+ "cycle": "AY 2027-28",
+ "category": "EoA with intake change",
+ "version": 1,
+ "claims": {
+  "UNCHANGED": 62,
+  "CHANGED_WITH_EVIDENCE": 9,
+  "CHANGED_NO_EXPLANATION": 3,
+  "NEW": 6
+ },
+ "sampled": 6,
+ "sampled_stale": 0,
+ "open_checks": 7,
+ "findings": 15,
+ "bundles": 1,
+ "anomaly": {
+  "score": -0.199,
+  "flag": true,
+  "top_feature": "faculty_growth",
+  "wording": "unusual compared with peers (same state and size band); a prompt for review, not a conclusion",
+  "precomputed": true
+ }
+}

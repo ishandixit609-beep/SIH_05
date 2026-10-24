@@ -1,0 +1,555 @@
+{
+ "same_text": [
+  {
+   "a": "Shree Vidya Shikshan Prasarak Mandal",
+   "b": "Shri Vidya Shikshan Prasarak Mandal",
+   "same": true
+  },
+  {
+   "a": "Shri Vidya Shikshan Prasarak Mandal",
+   "b": "Shri Vidya Shikshan Sanstha",
+   "same": false
+  },
+  {
+   "a": "Vidya Engg. Coll. Pvt. Ltd.",
+   "b": "vidya engineering college private limited",
+   "same": true
+  },
+  {
+   "a": "M/s Tilak & Sons",
+   "b": "M/s Tilak and Sons",
+   "same": true
+  },
+  {
+   "a": "श्री विद्या शिक्षण संस्था",
+   "b": "श्री  विद्या, शिक्षण संस्था.",
+   "same": true
+  },
+  {
+   "a": "श्री विद्या शिक्षण संस्था",
+   "b": "श्री विद्या शिक्षण मंडळ",
+   "same": false
+  }
+ ],
+ "same_num": [
+  {
+   "a": 600,
+   "b": 600,
+   "tol": 0,
+   "same": true
+  },
+  {
+   "a": 600,
+   "b": 603,
+   "tol": 0,
+   "same": false
+  },
+  {
+   "a": 600,
+   "b": 603,
+   "tol": 0.01,
+   "same": true
+  },
+  {
+   "a": 1800.0,
+   "b": 1800,
+   "tol": 0,
+   "same": true
+  }
+ ],
+ "grade": [
+  {
+   "doc": null,
+   "conf": null,
+   "rec": null,
+   "adapter": null,
+   "expect": {
+    "rung": 0,
+    "conflict": false
+   }
+  },
+  {
+   "doc": "X",
+   "conf": 0.9,
+   "rec": null,
+   "adapter": null,
+   "expect": {
+    "rung": 1,
+    "conflict": false
+   }
+  },
+  {
+   "doc": "X",
+   "conf": 0.5,
+   "rec": null,
+   "adapter": null,
+   "expect": {
+    "rung": 0,
+    "conflict": false
+   }
+  },
+  {
+   "doc": "X",
+   "conf": 0.9,
+   "rec": "X",
+   "adapter": null,
+   "expect": {
+    "rung": 2,
+    "conflict": false
+   }
+  },
+  {
+   "doc": "X",
+   "conf": 0.9,
+   "rec": "Y",
+   "adapter": null,
+   "expect": {
+    "rung": 1,
+    "conflict": true
+   }
+  },
+  {
+   "doc": "X",
+   "conf": 0.9,
+   "rec": "X",
+   "adapter": "verified",
+   "expect": {
+    "rung": 3,
+    "conflict": false
+   }
+  },
+  {
+   "doc": "X",
+   "conf": 0.9,
+   "rec": null,
+   "adapter": "mismatch",
+   "expect": {
+    "rung": 1,
+    "conflict": true
+   }
+  },
+  {
+   "doc": null,
+   "conf": null,
+   "rec": "X",
+   "adapter": "verified",
+   "expect": {
+    "rung": 3,
+    "conflict": false
+   }
+  }
+ ],
+ "check_state": [
+  {
+   "in": {},
+   "expect": {
+    "state": "PASSED",
+    "reason": "ok"
+   },
+   "coverage": "complete"
+  },
+  {
+   "in": {
+    "configured": false
+   },
+   "expect": {
+    "state": "NOT_CONFIGURED",
+    "reason": "no_rule_or_checklist"
+   },
+   "coverage": "not_configured"
+  },
+  {
+   "in": {
+    "has_document": false
+   },
+   "expect": {
+    "state": "FAILED",
+    "reason": "missing_document"
+   },
+   "coverage": "missing"
+  },
+  {
+   "in": {
+    "rules": [
+     true,
+     false
+    ]
+   },
+   "expect": {
+    "state": "FAILED",
+    "reason": "rule_failed"
+   },
+   "coverage": "partial"
+  },
+  {
+   "in": {
+    "g": {
+     "rung": 1,
+     "conflict": true
+    }
+   },
+   "expect": {
+    "state": "MANUAL_REVIEW",
+    "reason": "sources_disagree"
+   },
+   "coverage": "needs_review"
+  },
+  {
+   "in": {
+    "g": {
+     "rung": 1,
+     "conflict": false
+    },
+    "adapter_status": "source_unavailable"
+   },
+   "expect": {
+    "state": "UNABLE_TO_VERIFY",
+    "reason": "source_unavailable"
+   },
+   "coverage": "unable_to_verify"
+  },
+  {
+   "in": {
+    "g": {
+     "rung": 1,
+     "conflict": false
+    }
+   },
+   "expect": {
+    "state": "UNABLE_TO_VERIFY",
+    "reason": "no_record_to_match"
+   },
+   "coverage": "unable_to_verify"
+  },
+  {
+   "in": {
+    "low_confidence": true
+   },
+   "expect": {
+    "state": "MANUAL_REVIEW",
+    "reason": "needs_human_read"
+   },
+   "coverage": "needs_review"
+  },
+  {
+   "in": {
+    "adapter_status": "expired"
+   },
+   "expect": {
+    "state": "FAILED",
+    "reason": "expired_or_expires_too_soon"
+   },
+   "coverage": "partial"
+  },
+  {
+   "in": {
+    "g": {
+     "rung": 2,
+     "conflict": false
+    },
+    "required_rung": 3,
+    "max_rung": 2
+   },
+   "expect": {
+    "state": "PASSED",
+    "reason": "ok"
+   },
+   "coverage": "complete"
+  },
+  {
+   "in": {
+    "expiry": "2027-09-30",
+    "must_cover_until": "2027-12-31"
+   },
+   "expect": {
+    "state": "FAILED",
+    "reason": "expired_or_expires_too_soon"
+   },
+   "coverage": "partial"
+  }
+ ],
+ "guard": [
+  {
+   "checks": {
+    "A": "PASSED",
+    "B": "FAILED"
+   },
+   "waivers": [],
+   "open": [
+    "B"
+   ],
+   "overall": "REVIEW_INCOMPLETE"
+  },
+  {
+   "checks": {
+    "A": "PASSED",
+    "B": "FAILED"
+   },
+   "waivers": [
+    "B"
+   ],
+   "open": [],
+   "overall": "READY_FOR_DECISION"
+  },
+  {
+   "checks": {
+    "A": "PASSED",
+    "B": "FAILED"
+   },
+   "waivers": [
+    "A",
+    "B",
+    "C"
+   ],
+   "open": [],
+   "overall": "READY_FOR_DECISION"
+  },
+  {
+   "checks": {
+    "A": "PASSED"
+   },
+   "waivers": [],
+   "open": [],
+   "overall": "READY_FOR_DECISION"
+  },
+  {
+   "checks": {
+    "A": "PASSED"
+   },
+   "waivers": [
+    "B"
+   ],
+   "open": [],
+   "overall": "READY_FOR_DECISION"
+  },
+  {
+   "checks": {
+    "A": "PASSED"
+   },
+   "waivers": [
+    "A",
+    "B",
+    "C"
+   ],
+   "open": [],
+   "overall": "READY_FOR_DECISION"
+  },
+  {
+   "checks": {
+    "A": "UNABLE_TO_VERIFY",
+    "B": "MANUAL_REVIEW",
+    "C": "NOT_CONFIGURED"
+   },
+   "waivers": [],
+   "open": [
+    "A",
+    "B",
+    "C"
+   ],
+   "overall": "REVIEW_INCOMPLETE"
+  },
+  {
+   "checks": {
+    "A": "UNABLE_TO_VERIFY",
+    "B": "MANUAL_REVIEW",
+    "C": "NOT_CONFIGURED"
+   },
+   "waivers": [
+    "B"
+   ],
+   "open": [
+    "A",
+    "C"
+   ],
+   "overall": "REVIEW_INCOMPLETE"
+  },
+  {
+   "checks": {
+    "A": "UNABLE_TO_VERIFY",
+    "B": "MANUAL_REVIEW",
+    "C": "NOT_CONFIGURED"
+   },
+   "waivers": [
+    "A",
+    "B",
+    "C"
+   ],
+   "open": [],
+   "overall": "READY_FOR_DECISION"
+  }
+ ],
+ "chain": {
+  "events": [
+   {
+    "ts": "2027-01-12T10:00:00+05:30",
+    "actor": "system",
+    "event": "stage.read",
+    "payload": {
+     "app": "APP-0001",
+     "pages": 112
+    }
+   },
+   {
+    "ts": "2027-01-12T10:00:02+05:30",
+    "actor": "officer-1",
+    "event": "waiver.recorded",
+    "payload": {
+     "check": "affil",
+     "reason": "विश्वविद्यालय पोर्टल बंद; original देखा"
+    }
+   },
+   {
+    "ts": "2027-01-12T10:05:00+05:30",
+    "actor": "officer-1",
+    "event": "decision.request_info",
+    "payload": {
+     "b": 1,
+     "a": 2
+    }
+   }
+  ],
+  "rows": [
+   {
+    "seq": 1,
+    "event": {
+     "ts": "2027-01-12T10:00:00+05:30",
+     "actor": "system",
+     "event": "stage.read",
+     "payload": {
+      "app": "APP-0001",
+      "pages": 112
+     }
+    },
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "c2f8651d1fe83ed4f4cfd14f02f122a0b9b0925b0a2e8f44be3f5ea1d19ffa6b"
+   },
+   {
+    "seq": 2,
+    "event": {
+     "ts": "2027-01-12T10:00:02+05:30",
+     "actor": "officer-1",
+     "event": "waiver.recorded",
+     "payload": {
+      "check": "affil",
+      "reason": "विश्वविद्यालय पोर्टल बंद; original देखा"
+     }
+    },
+    "prev_hash": "c2f8651d1fe83ed4f4cfd14f02f122a0b9b0925b0a2e8f44be3f5ea1d19ffa6b",
+    "hash": "d1030762b13b65cab138423b8bc431e80f862e87197e698ba410db2664f31884"
+   },
+   {
+    "seq": 3,
+    "event": {
+     "ts": "2027-01-12T10:05:00+05:30",
+     "actor": "officer-1",
+     "event": "decision.request_info",
+     "payload": {
+      "b": 1,
+      "a": 2
+     }
+    },
+    "prev_hash": "d1030762b13b65cab138423b8bc431e80f862e87197e698ba410db2664f31884",
+    "hash": "2575684e23b18cce996c8ffd4c2f8a7e5a5fe310cadeeaaa01a21d02c5cf638f"
+   }
+  ]
+ },
+ "bucket": [
+  {
+   "new": 1,
+   "old": null,
+   "missing": true,
+   "declared": false,
+   "supports": false,
+   "tol": 0,
+   "expect": "NEW"
+  },
+  {
+   "new": 58,
+   "old": 58,
+   "missing": false,
+   "declared": false,
+   "supports": false,
+   "tol": 0,
+   "expect": "UNCHANGED"
+  },
+  {
+   "new": 83,
+   "old": 58,
+   "missing": false,
+   "declared": false,
+   "supports": false,
+   "tol": 0,
+   "expect": "CHANGED_NO_EXPLANATION"
+  },
+  {
+   "new": 83,
+   "old": 58,
+   "missing": false,
+   "declared": true,
+   "supports": true,
+   "tol": 0,
+   "expect": "CHANGED_WITH_EVIDENCE"
+  },
+  {
+   "new": 83,
+   "old": 58,
+   "missing": false,
+   "declared": true,
+   "supports": false,
+   "tol": 0,
+   "expect": "CHANGED_NO_EXPLANATION"
+  },
+  {
+   "new": "Shree X",
+   "old": "Shri X",
+   "missing": false,
+   "declared": false,
+   "supports": false,
+   "tol": 0,
+   "expect": "UNCHANGED"
+  }
+ ],
+ "sampler": {
+  "n_required": [
+   {
+    "p": 0.05,
+    "n": 59
+   },
+   {
+    "p": 0.02,
+    "n": 149
+   },
+   {
+    "p": 0.01,
+    "n": 299
+   }
+  ],
+  "bound": [
+   {
+    "N": 62,
+    "n": 6,
+    "k": 23
+   },
+   {
+    "N": 62,
+    "n": 21,
+    "k": 6
+   },
+   {
+    "N": 62,
+    "n": 32,
+    "k": 3
+   },
+   {
+    "N": 80,
+    "n": 10,
+    "k": 19
+   },
+   {
+    "N": 200,
+    "n": 59,
+    "k": 8
+   }
+  ]
+ }
+}
