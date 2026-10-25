@@ -1,0 +1,82 @@
+{
+ "D-01": {
+  "1": [
+   {
+    "field": "trust.name",
+    "text": "Shri Vidya Shikshan Prasarak Mandal",
+    "box": [
+     167,
+     56,
+     371,
+     67
+    ]
+   }
+  ]
+ },
+ "D-02": {
+  "3": [
+   {
+    "field": "trust.name",
+    "text": "Shri Vidya Shikshan Sanstha",
+    "box": [
+     104,
+     56,
+     261,
+     67
+    ]
+   }
+  ]
+ },
+ "D-03": {
+  "8": [
+   {
+    "field": "area.built_up_sqm",
+    "text": "Built-up area: 1,800 sq m",
+    "box": [
+     60,
+     78,
+     200,
+     89
+    ]
+   },
+   {
+    "field": "intake.total",
+    "text": "Intake applied: 600",
+    "box": [
+     60,
+     122,
+     167,
+     133
+    ]
+   }
+  ]
+ },
+ "D-04": {
+  "1": [
+   {
+    "field": "fire_noc.valid_till",
+    "text": "Valid till: 30-09-2027",
+    "box": [
+     60,
+     78,
+     175,
+     89
+    ]
+   }
+  ]
+ },
+ "D-07": {
+  "4": [
+   {
+    "field": "faculty.count",
+    "text": "Total faculty: 83",
+    "box": [
+     60,
+     56,
+     150,
+     67
+    ]
+   }
+  ]
+ }
+}

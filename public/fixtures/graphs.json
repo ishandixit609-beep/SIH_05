@@ -1,0 +1,152 @@
+{
+ "F-011": {
+  "trace": [
+   "eoa_v1",
+   "TRUST_NAME_CONSISTENT",
+   "D-01 p.1",
+   "trust.name",
+   "F-011",
+   "request_one_document"
+  ]
+ },
+ "F-012": {
+  "trace": [
+   "eoa_v1",
+   "TRUST_NAME_CONSISTENT",
+   "D-01 p.1",
+   "trust.name",
+   "F-012",
+   "request_one_document"
+  ]
+ },
+ "F-013": {
+  "trace": [
+   "eoa_v1",
+   "TRUST_NAME_CONSISTENT",
+   "D-02 p.3",
+   "trust.name",
+   "F-013",
+   "request_one_document"
+  ]
+ },
+ "F-014": {
+  "trace": [
+   "eoa_v1",
+   "AREA_PER_SEAT",
+   "D-03 p.8",
+   "intake.total",
+   "F-014",
+   "request_one_document"
+  ]
+ },
+ "F-015": {
+  "trace": [
+   "eoa_v1",
+   "CARPET_TO_BUILTUP",
+   "D-03 p.8",
+   "area.carpet_sqm",
+   "F-015",
+   "request_one_document"
+  ]
+ },
+ "F-016": {
+  "trace": [
+   "eoa_v1",
+   "FIRE_NOC_COVERS_SEMESTER",
+   "D-04 p.1",
+   "fire_noc.valid_till_ord",
+   "F-016",
+   "request_one_document"
+  ]
+ },
+ "F-017": {
+  "trace": [
+   "eoa_v1",
+   "FACULTY_OVERLAP",
+   "claim",
+   "faculty.count",
+   "F-017",
+   "query_issuer"
+  ]
+ },
+ "F-018": {
+  "trace": [
+   "eoa_v1",
+   "DELTA_UNEXPLAINED",
+   "D-07 p.4",
+   "faculty.count",
+   "F-018",
+   "request_one_document"
+  ]
+ },
+ "F-019": {
+  "trace": [
+   "eoa_v1",
+   "DELTA_UNEXPLAINED",
+   "claim",
+   "hostel.capacity",
+   "F-019",
+   "request_one_document"
+  ]
+ },
+ "F-020": {
+  "trace": [
+   "eoa_v1",
+   "DELTA_UNEXPLAINED",
+   "claim",
+   "library.titles",
+   "F-020",
+   "request_one_document"
+  ]
+ },
+ "F-021": {
+  "trace": [
+   "eoa_v1",
+   "ACCREDITATION_FORMAT",
+   "claim",
+   "accreditation",
+   "F-021",
+   "read_qr"
+  ]
+ },
+ "F-022": {
+  "trace": [
+   "eoa_v1",
+   "ISSUER_UNAVAILABLE",
+   "claim",
+   "affiliation.valid_till_ord",
+   "F-022",
+   "query_issuer"
+  ]
+ },
+ "F-023": {
+  "trace": [
+   "eoa_v1",
+   "DOC_REUSE",
+   "claim",
+   "land.survey_no",
+   "F-023",
+   "request_one_document"
+  ]
+ },
+ "F-024": {
+  "trace": [
+   "eoa_v1",
+   "PHOTO_LOCATION_HINT",
+   "claim",
+   "lab.count",
+   "F-024",
+   "request_one_document"
+  ]
+ },
+ "F-025": {
+  "trace": [
+   "eoa_v1",
+   "ANOMALY",
+   "claim",
+   "faculty.count",
+   "F-025",
+   "request_one_document"
+  ]
+ }
+}

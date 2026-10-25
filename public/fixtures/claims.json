@@ -1,0 +1,580 @@
+{
+ "application": "APP-0001",
+ "cycle": "AY 2027-28",
+ "claims": [
+  {
+   "key": "trust.name",
+   "value": "Shri Vidya Shikshan Prasarak Mandal",
+   "bucket": "UNCHANGED",
+   "prev": "Shri Vidya Shikshan Prasarak Mandal",
+   "sampled": false
+  },
+  {
+   "key": "trust.type",
+   "value": "Public Trust",
+   "bucket": "UNCHANGED",
+   "prev": "Public Trust",
+   "sampled": false
+  },
+  {
+   "key": "trust.reg_no",
+   "value": "SYN/PTR/F-1234/PUNE",
+   "bucket": "UNCHANGED",
+   "prev": "SYN/PTR/F-1234/PUNE",
+   "sampled": false
+  },
+  {
+   "key": "trust.reg_date",
+   "value": "14-06-1998",
+   "bucket": "UNCHANGED",
+   "prev": "14-06-1998",
+   "sampled": false
+  },
+  {
+   "key": "trust.chair",
+   "value": "Chairperson (synthetic)",
+   "bucket": "UNCHANGED",
+   "prev": "Chairperson (synthetic)",
+   "sampled": true
+  },
+  {
+   "key": "trust.members",
+   "value": 9,
+   "bucket": "UNCHANGED",
+   "prev": 9,
+   "sampled": false
+  },
+  {
+   "key": "land.survey_no",
+   "value": "Gat 112/2, 112/3",
+   "bucket": "UNCHANGED",
+   "prev": "Gat 112/2, 112/3",
+   "sampled": false
+  },
+  {
+   "key": "land.area_acre",
+   "value": 8.0,
+   "bucket": "UNCHANGED",
+   "prev": 8.0,
+   "sampled": false
+  },
+  {
+   "key": "land.ownership",
+   "value": "Owned",
+   "bucket": "UNCHANGED",
+   "prev": "Owned",
+   "sampled": false
+  },
+  {
+   "key": "land.na_order_no",
+   "value": "SYN/NA/2003/117",
+   "bucket": "UNCHANGED",
+   "prev": "SYN/NA/2003/117",
+   "sampled": false
+  },
+  {
+   "key": "land.village",
+   "value": "Hinjewadi (synthetic)",
+   "bucket": "UNCHANGED",
+   "prev": "Hinjewadi (synthetic)",
+   "sampled": false
+  },
+  {
+   "key": "land.lease_years",
+   "value": 0,
+   "bucket": "UNCHANGED",
+   "prev": 0,
+   "sampled": false
+  },
+  {
+   "key": "building.cc_no",
+   "value": "SYN/BCC/2011/58",
+   "bucket": "UNCHANGED",
+   "prev": "SYN/BCC/2011/58",
+   "sampled": false
+  },
+  {
+   "key": "building.cc_date",
+   "value": "09-02-2011",
+   "bucket": "UNCHANGED",
+   "prev": "09-02-2011",
+   "sampled": false
+  },
+  {
+   "key": "building.plan_approval_no",
+   "value": "SYN/BP/2009/310",
+   "bucket": "UNCHANGED",
+   "prev": "SYN/BP/2009/310",
+   "sampled": false
+  },
+  {
+   "key": "building.plan_approval_date",
+   "value": "21-11-2009",
+   "bucket": "UNCHANGED",
+   "prev": "21-11-2009",
+   "sampled": false
+  },
+  {
+   "key": "area.carpet_sqm",
+   "value": 1720,
+   "bucket": "UNCHANGED",
+   "prev": 1720,
+   "sampled": false
+  },
+  {
+   "key": "area.lab_sqm",
+   "value": 1100,
+   "bucket": "UNCHANGED",
+   "prev": 1100,
+   "sampled": false
+  },
+  {
+   "key": "area.sanctioned_plan_sqm",
+   "value": 2400,
+   "bucket": "UNCHANGED",
+   "prev": 2400,
+   "sampled": false
+  },
+  {
+   "key": "area.classroom_sqm",
+   "value": 520,
+   "bucket": "UNCHANGED",
+   "prev": 520,
+   "sampled": true
+  },
+  {
+   "key": "area.admin_sqm",
+   "value": 140,
+   "bucket": "UNCHANGED",
+   "prev": 140,
+   "sampled": false
+  },
+  {
+   "key": "fire_noc.number",
+   "value": "SYN/FIRE/PMC/2026/4471",
+   "bucket": "UNCHANGED",
+   "prev": "SYN/FIRE/PMC/2026/4471",
+   "sampled": false
+  },
+  {
+   "key": "fire_noc.max_floors",
+   "value": 5,
+   "bucket": "UNCHANGED",
+   "prev": 5,
+   "sampled": false
+  },
+  {
+   "key": "fire_noc.agency",
+   "value": "State Fire Service (synthetic)",
+   "bucket": "UNCHANGED",
+   "prev": "State Fire Service (synthetic)",
+   "sampled": true
+  },
+  {
+   "key": "affiliation.univ",
+   "value": "Sahyadri Technological University (synthetic)",
+   "bucket": "UNCHANGED",
+   "prev": "Sahyadri Technological University (synthetic)",
+   "sampled": false
+  },
+  {
+   "key": "affiliation.valid_till_ord",
+   "value": 740498,
+   "bucket": "UNCHANGED",
+   "prev": 740498,
+   "sampled": false
+  },
+  {
+   "key": "affiliation.programmes",
+   "value": 5,
+   "bucket": "UNCHANGED",
+   "prev": 5,
+   "sampled": false
+  },
+  {
+   "key": "naac.grade",
+   "value": "A",
+   "bucket": "UNCHANGED",
+   "prev": "A",
+   "sampled": false
+  },
+  {
+   "key": "naac.valid_till_ord",
+   "value": 740802,
+   "bucket": "UNCHANGED",
+   "prev": 740802,
+   "sampled": false
+  },
+  {
+   "key": "nba.cse_valid_till_ord",
+   "value": 740528,
+   "bucket": "UNCHANGED",
+   "prev": 740528,
+   "sampled": false
+  },
+  {
+   "key": "programme.ENTC.intake",
+   "value": 120,
+   "bucket": "UNCHANGED",
+   "prev": 120,
+   "sampled": false
+  },
+  {
+   "key": "programme.MECH.intake",
+   "value": 120,
+   "bucket": "UNCHANGED",
+   "prev": 120,
+   "sampled": false
+  },
+  {
+   "key": "programme.CIVIL.intake",
+   "value": 60,
+   "bucket": "UNCHANGED",
+   "prev": 60,
+   "sampled": false
+  },
+  {
+   "key": "faculty.professors",
+   "value": 9,
+   "bucket": "UNCHANGED",
+   "prev": 9,
+   "sampled": false
+  },
+  {
+   "key": "faculty.assoc_prof",
+   "value": 14,
+   "bucket": "UNCHANGED",
+   "prev": 14,
+   "sampled": false
+  },
+  {
+   "key": "faculty.asst_prof",
+   "value": 35,
+   "bucket": "UNCHANGED",
+   "prev": 35,
+   "sampled": false
+  },
+  {
+   "key": "faculty.nonteaching",
+   "value": 61,
+   "bucket": "UNCHANGED",
+   "prev": 61,
+   "sampled": false
+  },
+  {
+   "key": "library.area_sqm",
+   "value": 380,
+   "bucket": "UNCHANGED",
+   "prev": 380,
+   "sampled": false
+  },
+  {
+   "key": "library.journals",
+   "value": 62,
+   "bucket": "UNCHANGED",
+   "prev": 62,
+   "sampled": false
+  },
+  {
+   "key": "library.ebooks",
+   "value": 4200,
+   "bucket": "UNCHANGED",
+   "prev": 4200,
+   "sampled": false
+  },
+  {
+   "key": "lab.cse_count",
+   "value": 5,
+   "bucket": "UNCHANGED",
+   "prev": 5,
+   "sampled": false
+  },
+  {
+   "key": "lab.entc_count",
+   "value": 4,
+   "bucket": "UNCHANGED",
+   "prev": 4,
+   "sampled": false
+  },
+  {
+   "key": "lab.mech_count",
+   "value": 5,
+   "bucket": "UNCHANGED",
+   "prev": 5,
+   "sampled": false
+  },
+  {
+   "key": "lab.civil_count",
+   "value": 3,
+   "bucket": "UNCHANGED",
+   "prev": 3,
+   "sampled": false
+  },
+  {
+   "key": "finance.audited_year",
+   "value": "2025-26",
+   "bucket": "UNCHANGED",
+   "prev": "2025-26",
+   "sampled": false
+  },
+  {
+   "key": "finance.corpus_inr",
+   "value": 25000000,
+   "bucket": "UNCHANGED",
+   "prev": 25000000,
+   "sampled": false
+  },
+  {
+   "key": "fees.annual_tuition_inr",
+   "value": 135000,
+   "bucket": "UNCHANGED",
+   "prev": 135000,
+   "sampled": false
+  },
+  {
+   "key": "fees.approved_by",
+   "value": "State Fee Regulatory Authority",
+   "bucket": "UNCHANGED",
+   "prev": "State Fee Regulatory Authority",
+   "sampled": true
+  },
+  {
+   "key": "campus.pincode",
+   "value": "411057",
+   "bucket": "UNCHANGED",
+   "prev": "411057",
+   "sampled": false
+  },
+  {
+   "key": "campus.district",
+   "value": "Pune",
+   "bucket": "UNCHANGED",
+   "prev": "Pune",
+   "sampled": true
+  },
+  {
+   "key": "campus.state",
+   "value": "Maharashtra",
+   "bucket": "UNCHANGED",
+   "prev": "Maharashtra",
+   "sampled": false
+  },
+  {
+   "key": "students.enrolled",
+   "value": 2310,
+   "bucket": "UNCHANGED",
+   "prev": 2310,
+   "sampled": false
+  },
+  {
+   "key": "iqac.constituted",
+   "value": "Yes",
+   "bucket": "UNCHANGED",
+   "prev": "Yes",
+   "sampled": false
+  },
+  {
+   "key": "grievance.cell",
+   "value": "Yes",
+   "bucket": "UNCHANGED",
+   "prev": "Yes",
+   "sampled": false
+  },
+  {
+   "key": "placement.cell",
+   "value": "Yes",
+   "bucket": "UNCHANGED",
+   "prev": "Yes",
+   "sampled": false
+  },
+  {
+   "key": "hostel.girls_capacity",
+   "value": 120,
+   "bucket": "UNCHANGED",
+   "prev": 120,
+   "sampled": true
+  },
+  {
+   "key": "hostel.boys_capacity",
+   "value": 120,
+   "bucket": "UNCHANGED",
+   "prev": 120,
+   "sampled": false
+  },
+  {
+   "key": "canteen.fssai_valid_ord",
+   "value": 740315,
+   "bucket": "UNCHANGED",
+   "prev": 740315,
+   "sampled": false
+  },
+  {
+   "key": "power.sanctioned_kva",
+   "value": 250,
+   "bucket": "UNCHANGED",
+   "prev": 250,
+   "sampled": false
+  },
+  {
+   "key": "dg.capacity_kva",
+   "value": 125,
+   "bucket": "UNCHANGED",
+   "prev": 125,
+   "sampled": false
+  },
+  {
+   "key": "water.supply_kld",
+   "value": 60,
+   "bucket": "UNCHANGED",
+   "prev": 60,
+   "sampled": false
+  },
+  {
+   "key": "semester.odd_end_ord",
+   "value": 740333,
+   "bucket": "UNCHANGED",
+   "prev": 740333,
+   "sampled": false
+  },
+  {
+   "key": "intake.total",
+   "value": 600,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 480,
+   "sampled": false
+  },
+  {
+   "key": "programme.CSE.intake",
+   "value": 180,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 120,
+   "sampled": false
+  },
+  {
+   "key": "programme.IT.intake",
+   "value": 120,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 60,
+   "sampled": false
+  },
+  {
+   "key": "area.built_up_sqm",
+   "value": 1800,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 1650,
+   "sampled": false
+  },
+  {
+   "key": "lab.count",
+   "value": 17,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 14,
+   "sampled": false
+  },
+  {
+   "key": "fire_noc.valid_till_ord",
+   "value": 740254,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 739889,
+   "sampled": false
+  },
+  {
+   "key": "finance.fdr_amount_inr",
+   "value": 7500000,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 5000000,
+   "sampled": false
+  },
+  {
+   "key": "building.floors",
+   "value": 5,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 4,
+   "sampled": false
+  },
+  {
+   "key": "accreditation.nba_programmes",
+   "value": 3,
+   "bucket": "CHANGED_WITH_EVIDENCE",
+   "prev": 2,
+   "sampled": false
+  },
+  {
+   "key": "faculty.count",
+   "value": 83,
+   "bucket": "CHANGED_NO_EXPLANATION",
+   "prev": 58,
+   "sampled": false
+  },
+  {
+   "key": "hostel.capacity",
+   "value": 360,
+   "bucket": "CHANGED_NO_EXPLANATION",
+   "prev": 240,
+   "sampled": false
+  },
+  {
+   "key": "library.titles",
+   "value": 26000,
+   "bucket": "CHANGED_NO_EXPLANATION",
+   "prev": 18500,
+   "sampled": false
+  },
+  {
+   "key": "posh.icc_constituted",
+   "value": "Yes",
+   "bucket": "NEW",
+   "prev": null,
+   "sampled": false
+  },
+  {
+   "key": "antiragging.committee",
+   "value": "Yes",
+   "bucket": "NEW",
+   "prev": null,
+   "sampled": false
+  },
+  {
+   "key": "solar.capacity_kw",
+   "value": 120,
+   "bucket": "NEW",
+   "prev": null,
+   "sampled": false
+  },
+  {
+   "key": "sports.ground_sqm",
+   "value": 6500,
+   "bucket": "NEW",
+   "prev": null,
+   "sampled": false
+  },
+  {
+   "key": "rwh.installed",
+   "value": "Yes",
+   "bucket": "NEW",
+   "prev": null,
+   "sampled": false
+  },
+  {
+   "key": "accessibility.ramp_lift",
+   "value": "Yes",
+   "bucket": "NEW",
+   "prev": null,
+   "sampled": false
+  }
+ ],
+ "counts": {
+  "UNCHANGED": 62,
+  "CHANGED_WITH_EVIDENCE": 9,
+  "CHANGED_NO_EXPLANATION": 3,
+  "NEW": 6
+ },
+ "sample": [
+  "area.classroom_sqm",
+  "fire_noc.agency",
+  "fees.approved_by",
+  "campus.district",
+  "hostel.girls_capacity",
+  "trust.chair"
+ ]
+}

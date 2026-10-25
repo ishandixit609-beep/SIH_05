@@ -1,0 +1,14 @@
+{
+ "finding": "F-014",
+ "rule": "AREA_PER_SEAT",
+ "v1": {
+  "version": "eoa_v1",
+  "param": 4.0,
+  "state": "FAILED"
+ },
+ "v1_1": {
+  "version": "eoa_v1.1 (illustrative)",
+  "param": 3.0,
+  "state": "PASSED"
+ }
+}

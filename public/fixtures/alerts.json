@@ -1,0 +1,36 @@
+{
+ "alerts": [
+  {
+   "id": "A-01",
+   "kind": "expiry_inside_semester",
+   "owner_role": "reviewer",
+   "due": "2027-01-19",
+   "status": "open",
+   "ref": "F-016"
+  },
+  {
+   "id": "A-02",
+   "kind": "source_unavailable",
+   "owner_role": "reviewer",
+   "due": "2027-01-15",
+   "status": "open",
+   "ref": "F-022"
+  },
+  {
+   "id": "A-03",
+   "kind": "anomaly_raised",
+   "owner_role": "reviewer",
+   "due": "2027-01-19",
+   "status": "open",
+   "ref": "F-025"
+  },
+  {
+   "id": "A-04",
+   "kind": "bundle_awaiting_institution",
+   "owner_role": "reviewer",
+   "due": "2027-01-22",
+   "status": "open",
+   "ref": "B-01"
+  }
+ ]
+}

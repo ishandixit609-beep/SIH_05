@@ -1,0 +1,64 @@
+{
+ "campus_polygon": [
+  [
+   18.59,
+   73.736
+  ],
+  [
+   18.59,
+   73.744
+  ],
+  [
+   18.596,
+   73.744
+  ],
+  [
+   18.596,
+   73.736
+  ]
+ ],
+ "photos": [
+  {
+   "photo": 1,
+   "status": "no_location_data",
+   "km": null,
+   "lat": null,
+   "lon": null
+  },
+  {
+   "photo": 2,
+   "status": "no_location_data",
+   "km": null,
+   "lat": null,
+   "lon": null
+  },
+  {
+   "photo": 3,
+   "status": "inside_campus",
+   "km": 0.0,
+   "lat": 18.593,
+   "lon": 73.74
+  },
+  {
+   "photo": 4,
+   "status": "inside_campus",
+   "km": 0.0,
+   "lat": 18.593,
+   "lon": 73.74
+  },
+  {
+   "photo": 5,
+   "status": "far_from_campus",
+   "km": 38.0,
+   "lat": 18.935,
+   "lon": 73.74
+  },
+  {
+   "photo": 6,
+   "status": "far_from_campus",
+   "km": 38.0,
+   "lat": 18.935,
+   "lon": 73.74
+  }
+ ]
+}

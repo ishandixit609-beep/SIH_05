@@ -1,0 +1,23 @@
+{
+ "today": "2027-01-12",
+ "semesters": [
+  {
+   "name": "Odd semester AY 2027-28",
+   "start": "2027-08-02",
+   "end": "2027-12-18"
+  },
+  {
+   "name": "Even semester AY 2027-28",
+   "start": "2028-01-10",
+   "end": "2028-05-20"
+  }
+ ],
+ "pins": [
+  {
+   "doc": "D-04",
+   "label": "Fire NOC",
+   "expires": "2027-09-30",
+   "inside_semester": true
+  }
+ ]
+}

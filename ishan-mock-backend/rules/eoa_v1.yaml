@@ -1,0 +1,75 @@
+version: eoa_v1
+effective_from: 2027-04-01
+# ALL VALUES ILLUSTRATIVE. Copy real norms and clause text from AICTE APH 2024-27 before real use.
+rules:
+  - id: AREA_PER_SEAT
+    title: Built-up area per seat
+    inputs: [intake.total, area.built_up_sqm]
+    expr: "area_built_up_sqm / intake_total >= params_min_sqm_per_seat"
+    value_expr: "area_built_up_sqm / intake_total"
+    params: {min_sqm_per_seat: 4.0}
+    dial: {param: min_sqm_per_seat, label: "Minimum built-up area per seat", unit: "sq m", min: 2.0, max: 7.0, step: 0.1}
+    severity: high
+    required_rung: 2
+    clause: {doc: "APH 2024-27", ref: "TBD", page: null}
+    message: "Built-up area per seat is {value:.1f} sq m; configured norm is {params_min_sqm_per_seat} (illustrative)."
+  - id: STUDENTS_PER_FACULTY
+    title: Students per faculty
+    inputs: [intake.total, faculty.count]
+    expr: "intake_total / faculty_count <= params_max_ratio"
+    value_expr: "intake_total / faculty_count"
+    params: {max_ratio: 20.0}
+    severity: medium
+    required_rung: 1
+    clause: {doc: "APH 2024-27", ref: "TBD", page: null}
+    message: "Students per faculty is {value:.1f}; configured ceiling is {params_max_ratio} (illustrative)."
+  - id: FIRE_NOC_COVERS_SEMESTER
+    title: Fire NOC covers the odd semester
+    inputs: [fire.valid_till_ord, sem.odd_end_ord]
+    expr: "fire_valid_till_ord >= sem_odd_end_ord"
+    value_expr: "fire_valid_till_ord - sem_odd_end_ord"
+    params: {}
+    severity: high
+    required_rung: 1
+    clause: {doc: "State fire-safety law / APH 2024-27", ref: "TBD", page: null}
+    message: "Fire NOC is valid till {fire_valid_till}, which falls inside the odd semester ({sem_odd_start} to {sem_odd_end}). Ask for the renewed NOC."
+  - id: CARPET_TO_BUILTUP
+    title: Carpet area as share of built-up area
+    inputs: [area.carpet_sqm, area.built_up_sqm]
+    expr: "area_carpet_sqm / area_built_up_sqm <= params_max_ratio"
+    value_expr: "area_carpet_sqm / area_built_up_sqm"
+    params: {max_ratio: 0.85}
+    severity: medium
+    required_rung: 1
+    clause: {doc: "APH 2024-27", ref: "TBD", page: null}
+    message: "Carpet area is {value:.2f} of built-up area; configured ceiling is {params_max_ratio} (illustrative)."
+  - id: FLOORS_WITHIN_NOC
+    title: Floors built within Fire NOC limit
+    inputs: [floors.built, floors.noc_limit]
+    expr: "floors_built <= floors_noc_limit"
+    value_expr: "floors_built"
+    params: {}
+    severity: medium
+    required_rung: 1
+    clause: {doc: "State fire-safety law", ref: "TBD", page: null}
+    message: "Building has {value:.0f} floors; the Fire NOC covers {floors_noc_limit} (illustrative)."
+  - id: LAB_AREA_PER_LAB
+    title: Area per laboratory
+    inputs: [labs.area_sqm, labs.count]
+    expr: "labs_area_sqm / labs_count >= params_min_sqm_per_lab"
+    value_expr: "labs_area_sqm / labs_count"
+    params: {min_sqm_per_lab: 60.0}
+    severity: low
+    required_rung: 1
+    clause: {doc: "APH 2024-27", ref: "TBD", page: null}
+    message: "Area per laboratory is {value:.1f} sq m; configured norm is {params_min_sqm_per_lab} (illustrative)."
+  - id: BUILTUP_WITHIN_SANCTIONED_PLAN
+    title: Built-up area within sanctioned plan
+    inputs: [area.built_up_sqm, area.sanctioned_plan_sqm]
+    expr: "area_built_up_sqm <= area_sanctioned_plan_sqm"
+    value_expr: "area_built_up_sqm"
+    params: {}
+    severity: medium
+    required_rung: 2
+    clause: {doc: "Local body sanctioned plan", ref: "TBD", page: null}
+    message: "Built-up area {value:.0f} sq m exceeds the sanctioned plan area {area_sanctioned_plan_sqm} sq m."

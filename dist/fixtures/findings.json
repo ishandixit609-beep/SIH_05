@@ -1,0 +1,454 @@
+{
+ "findings": [
+  {
+   "id": "F-011",
+   "rule_id": "TRUST_NAME_CONSISTENT",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": "B-01",
+   "claims": [
+    "trust.name"
+   ],
+   "evidence": [
+    {
+     "doc": "D-01",
+     "page": 1,
+     "box": [
+      167,
+      56,
+      371,
+      67
+     ],
+     "text": "Shri Vidya Shikshan Prasarak Mandal"
+    }
+   ],
+   "explanation": "Trust name differs between affidavit D-01 and land record D-02. Spelling variants (Shri/Shree) are already normalised, so this is a different name.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": true,
+   "trace": [
+    "eoa_v1",
+    "TRUST_NAME_CONSISTENT"
+   ]
+  },
+  {
+   "id": "F-012",
+   "rule_id": "TRUST_NAME_CONSISTENT",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": "B-01",
+   "claims": [
+    "trust.name"
+   ],
+   "evidence": [
+    {
+     "doc": "D-01",
+     "page": 1,
+     "box": [
+      167,
+      56,
+      371,
+      67
+     ],
+     "text": "Shri Vidya Shikshan Prasarak Mandal"
+    }
+   ],
+   "explanation": "Trust name differs between affidavit D-01 and AICTE record. Spelling variants (Shri/Shree) are already normalised, so this is a different name.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": true,
+   "trace": [
+    "eoa_v1",
+    "TRUST_NAME_CONSISTENT"
+   ]
+  },
+  {
+   "id": "F-013",
+   "rule_id": "TRUST_NAME_CONSISTENT",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": "B-01",
+   "claims": [
+    "trust.name"
+   ],
+   "evidence": [
+    {
+     "doc": "D-02",
+     "page": 3,
+     "box": [
+      104,
+      56,
+      261,
+      67
+     ],
+     "text": "Shri Vidya Shikshan Sanstha"
+    }
+   ],
+   "explanation": "Trust name differs between land record D-02 and AICTE record. Spelling variants (Shri/Shree) are already normalised, so this is a different name.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": true,
+   "trace": [
+    "eoa_v1",
+    "TRUST_NAME_CONSISTENT"
+   ]
+  },
+  {
+   "id": "F-014",
+   "rule_id": "AREA_PER_SEAT",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "FAILED",
+   "bundle_id": null,
+   "claims": [
+    "intake.total",
+    "area.built_up_sqm"
+   ],
+   "evidence": [
+    {
+     "doc": "D-03",
+     "page": 8,
+     "box": [
+      60,
+      78,
+      200,
+      89
+     ],
+     "text": "Built-up area: 1,800 sq m"
+    }
+   ],
+   "explanation": "Built-up area per seat is 3.0 sq m; configured norm is 4.0 (illustrative).",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": true,
+   "trace": [
+    "eoa_v1",
+    "AREA_PER_SEAT"
+   ]
+  },
+  {
+   "id": "F-015",
+   "rule_id": "CARPET_TO_BUILTUP",
+   "rule_version": "eoa_v1",
+   "severity": "medium",
+   "state": "FAILED",
+   "bundle_id": null,
+   "claims": [
+    "area.carpet_sqm",
+    "area.built_up_sqm"
+   ],
+   "evidence": [
+    {
+     "doc": "D-03",
+     "page": 8,
+     "box": [
+      60,
+      78,
+      200,
+      89
+     ],
+     "text": "Carpet area: 1,720 sq m"
+    }
+   ],
+   "explanation": "Carpet area is 0.96 of built-up area; configured ceiling is 0.85 (illustrative).",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "CARPET_TO_BUILTUP"
+   ]
+  },
+  {
+   "id": "F-016",
+   "rule_id": "FIRE_NOC_COVERS_SEMESTER",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "FAILED",
+   "bundle_id": null,
+   "claims": [
+    "fire_noc.valid_till_ord"
+   ],
+   "evidence": [
+    {
+     "doc": "D-04",
+     "page": 1,
+     "box": [
+      60,
+      78,
+      175,
+      89
+     ],
+     "text": "Valid till: 30-09-2027"
+    }
+   ],
+   "explanation": "Fire NOC is valid till 30-09-2027, which falls inside the odd semester (02-08-2027 to 18-12-2027). Ask for the renewed NOC.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "Renewal is the institution's to provide"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "FIRE_NOC_COVERS_SEMESTER"
+   ]
+  },
+  {
+   "id": "F-017",
+   "rule_id": "FACULTY_OVERLAP",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "faculty.count"
+   ],
+   "evidence": [],
+   "explanation": "Possible overlap, needs human confirmation: token F-7731 is listed full-time at two institutions from 2026-01-05.",
+   "next_step": {
+    "kind": "query_issuer",
+    "cost": 3,
+    "why": "AICTE faculty record can confirm the current employer"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "FACULTY_OVERLAP"
+   ]
+  },
+  {
+   "id": "F-018",
+   "rule_id": "DELTA_UNEXPLAINED",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "faculty.count"
+   ],
+   "evidence": [
+    {
+     "doc": "D-07",
+     "page": 4,
+     "box": [
+      60,
+      56,
+      150,
+      67
+     ],
+     "text": "Total faculty: 83"
+    }
+   ],
+   "explanation": "Faculty count changed from 58 to 83 with no declared change and no new programme.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "DELTA_UNEXPLAINED"
+   ]
+  },
+  {
+   "id": "F-019",
+   "rule_id": "DELTA_UNEXPLAINED",
+   "rule_version": "eoa_v1",
+   "severity": "medium",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "hostel.capacity"
+   ],
+   "evidence": [],
+   "explanation": "Hostel capacity changed from 240 to 360 with no declared change.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "DELTA_UNEXPLAINED"
+   ]
+  },
+  {
+   "id": "F-020",
+   "rule_id": "DELTA_UNEXPLAINED",
+   "rule_version": "eoa_v1",
+   "severity": "medium",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "library.titles"
+   ],
+   "evidence": [],
+   "explanation": "Library titles changed from 18,500 to 26,000 with no declared change.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "No QR or issuer source exists"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "DELTA_UNEXPLAINED"
+   ]
+  },
+  {
+   "id": "F-021",
+   "rule_id": "ACCREDITATION_FORMAT",
+   "rule_version": "eoa_v1",
+   "severity": "low",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "accreditation"
+   ],
+   "evidence": [],
+   "explanation": "Old-format certificate with low extraction confidence. Routed to a human read. Not treated as suspicious.",
+   "next_step": {
+    "kind": "read_qr",
+    "cost": 1,
+    "why": "Certificate carries no QR; compare with the public accreditation list"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "ACCREDITATION_FORMAT"
+   ]
+  },
+  {
+   "id": "F-022",
+   "rule_id": "ISSUER_UNAVAILABLE",
+   "rule_version": "eoa_v1",
+   "severity": "medium",
+   "state": "UNABLE_TO_VERIFY",
+   "bundle_id": null,
+   "claims": [
+    "affiliation.valid_till_ord"
+   ],
+   "evidence": [],
+   "explanation": "University portal did not respond (simulated). Unable to verify. This is not a failure.",
+   "next_step": {
+    "kind": "query_issuer",
+    "cost": 3,
+    "why": "Retry later or ask the university registrar"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "ISSUER_UNAVAILABLE"
+   ]
+  },
+  {
+   "id": "F-023",
+   "rule_id": "DOC_REUSE",
+   "rule_version": "eoa_v1",
+   "severity": "high",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "land.survey_no"
+   ],
+   "evidence": [],
+   "explanation": "Page 3 of the land record has the same SHA-256 as a file in another institution's application. Possible reuse, needs human confirmation.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "Ask for a fresh certified 7/12 extract"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "DOC_REUSE"
+   ]
+  },
+  {
+   "id": "F-024",
+   "rule_id": "PHOTO_LOCATION_HINT",
+   "rule_version": "eoa_v1",
+   "severity": "medium",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "lab.count"
+   ],
+   "evidence": [],
+   "explanation": "2 of 6 photos have location data about 38.0 km from the campus polygon; 2 have no location data (neutral). A hint only.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "Ask for geo-tagged photos; inspection only if still unclear"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "PHOTO_LOCATION_HINT"
+   ]
+  },
+  {
+   "id": "F-025",
+   "rule_id": "ANOMALY",
+   "rule_version": "eoa_v1",
+   "severity": "low",
+   "state": "MANUAL_REVIEW",
+   "bundle_id": null,
+   "claims": [
+    "faculty.count",
+    "intake.total"
+   ],
+   "evidence": [],
+   "explanation": "Students per faculty is 7.2; unusual compared with peers (same state and size band); a prompt for review, not a conclusion.",
+   "next_step": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "Faculty appointment letters"
+   },
+   "ai_read": false,
+   "trace": [
+    "eoa_v1",
+    "ANOMALY"
+   ]
+  }
+ ],
+ "bundles": [
+  {
+   "id": "B-01",
+   "root_cause": "Identity details differ",
+   "finding_ids": [
+    "F-011",
+    "F-012",
+    "F-013"
+   ],
+   "top_action": {
+    "kind": "request_one_document",
+    "cost": 2,
+    "why": "One corrected trust registration certificate resolves all three"
+   },
+   "letter_en": "Your documents give the trust's name in three different ways (affidavit, land record and AICTE record). Please upload one certified trust registration certificate that matches your AICTE record, or tell us which document is out of date. Refs: F-011, F-012, F-013 (rule TRUST_NAME_CONSISTENT, eoa_v1).",
+   "letter_note": "Marathi and Hindi versions are produced by the translation service and reviewed by the officer before sending."
+  }
+ ]
+}
