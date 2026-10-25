@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Python Virtual Environments & Caches
+.venv/
+*/.venv/
+venv/
+*/venv/
+env/
+*/env/
+__pycache__/
+*/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*/.pytest_cache/
+
+# Vite / Build / Testing Artifacts
+dist/
+dist-ssr/
+*.local
+node_modules/.vite/
+
+# SQLite databases & runtime data
+*.db
+*.sqlite3
+backend/data/
+
+# Environment files
+.env
+.env*.local
+!.env.example
+
+# Archives
+*.zip
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

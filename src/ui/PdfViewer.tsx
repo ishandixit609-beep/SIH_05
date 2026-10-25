@@ -13,7 +13,13 @@ export function PdfViewer({ doc, page, box }: { doc: string; page: number; box?:
     let dead = false; setMissing(false)
     ;(async () => {
       try {
-        const pdf = await pdfjs.getDocument(`/fixtures/pdfs/${doc}.pdf`).promise
+        const BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? '/api'
+        let pdf: any
+        try {
+          pdf = await pdfjs.getDocument(`${BASE}/documents/${doc}/file`).promise
+        } catch {
+          pdf = await pdfjs.getDocument(`/fixtures/pdfs/${doc}.pdf`).promise
+        }
         const pg = await pdf.getPage(Math.min(page, pdf.numPages))
         const vp = pg.getViewport({ scale: 1.6 }); const c = ref.current; if (!c || dead) return
         c.width = vp.width; c.height = vp.height

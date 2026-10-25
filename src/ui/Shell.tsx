@@ -52,6 +52,7 @@ export function Shell() {
           </div>
         </div>
         <div className="tools">
+          <a href="/ACCOMPLISHMENTS.md" download="SATYAPAN_ACCOMPLISHMENTS.md" className="btn xs" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 8px' }} title="Download Accomplishments Report (.md)">⬇ Report.md</a>
           <button className="searchbox" onClick={() => setPal(true)} aria-label="Search"><span>Search findings and pages</span><kbd>⌘K</kbd></button>
           <div className="lang" role="group" aria-label="Language">{(['en', 'hi', 'mr'] as Lang[]).map(l => <button key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{l === 'en' ? 'EN' : l === 'hi' ? 'हिं' : 'मरा'}</button>)}</div>
           <button className="themebtn" onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))} aria-label="Toggle light or dark theme" title="Toggle theme">{theme === 'dark' ? '☾ Dark' : '☀ Light'}</button>

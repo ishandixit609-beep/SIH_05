@@ -11,17 +11,52 @@ const GAPS: Record<string, string> = { R05: 'Fire NOC ends 30 Sep 2027, inside t
 export function Precheck() {
   const { say } = useContext(AppCtx); const cov = useApi<any>('/applications/APP-0001/coverage')
   const [n, setN] = useState(0); const [fixed, setFixed] = useState<string[]>([]); const [stage, setStage] = useState<any>(null)
+  const [file, setFile] = useState<File | null>(null)
   useEffect(() => { if (n > 0 && n < 14) { const t = setTimeout(() => setN(n + 1), 170); return () => clearTimeout(t) } }, [n])
   useEffect(() => { if (!stage || stage.done) return; const t = setInterval(async () => setStage(await api('/applications/APP-0001/events')), 500); return () => clearInterval(t) }, [stage])
   const reqs: any[] = cov.data?.requirements ?? []
-  const submit = async () => { await api('/applications', { method: 'POST' }); setStage(await api('/applications/APP-0001/events')) }
+
+  const onChooseFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0]
+    if (f) {
+      setFile(f)
+      setN(1)
+      say(`${f.name} loaded for pre-check`)
+    }
+  }
+
+  const submit = async () => {
+    if (file) {
+      const fd = new FormData()
+      fd.append('file', file)
+      const BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? '/api'
+      await fetch(`${BASE}/applications`, { method: 'POST', body: fd })
+    } else {
+      await api('/applications', { method: 'POST' })
+    }
+    setStage(await api('/applications/APP-0001/events'))
+  }
+
   return (
     <main style={{ paddingTop: 18 }}>
       <div className="t xs up dim">Institution desk · pre-submission check</div><h1 style={{ fontSize: '1.8rem' }}>Check your file before it becomes an official submission</h1>
       <p className="sm dim" style={{ maxWidth: 680 }}>The dry-run reads your documents and tests only the missing and expired rules. It creates no deficiency record. Fix what it finds, then submit.</p>
       <div className="grid2" style={{ marginTop: 14 }}>
-        <div className="drop"><div style={{ fontFamily: 'var(--serif)', fontSize: '1.15rem' }}>Drop your documents here</div><div className="xs dim" style={{ margin: '4px 0 10px' }}>PDF, JPG or PNG · English, हिन्दी or मराठी</div>
-          <button className="btn dark" onClick={() => { setN(1); say('8 sample documents loaded (synthetic)') }}>Load the 8 sample documents</button></div>
+        <div className="drop" onDragOver={e => e.preventDefault()} onDrop={e => {
+          e.preventDefault()
+          const f = e.dataTransfer.files?.[0]
+          if (f) { setFile(f); setN(1); say(`${f.name} loaded for pre-check`) }
+        }}>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: '1.15rem' }}>{file ? `Selected: ${file.name}` : 'Drop your documents here'}</div>
+          <div className="xs dim" style={{ margin: '4px 0 10px' }}>PDF, JPG or PNG · English, हिन्दी or मराठी</div>
+          <div className="row" style={{ gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <label className="btn" style={{ cursor: 'pointer' }}>
+              Choose PDF
+              <input type="file" accept="application/pdf" style={{ display: 'none' }} onChange={onChooseFile} />
+            </label>
+            <button className="btn dark" onClick={() => { setFile(null); setN(1); say('8 sample documents loaded (synthetic)') }}>Load the 8 sample documents</button>
+          </div>
+        </div>
         <div className="slip" data-no="CHECKLIST · EoA with intake change" style={{ borderRightStyle: 'solid' }}>
           {reqs.map((r, i) => <div key={r.id} className="sm" style={{ padding: '2px 0' }}><span className={`tick ${i < n ? (GAPS[r.id] && !fixed.includes(r.id) ? 'gap' : 'on') : ''}`}>{i < n ? (GAPS[r.id] && !fixed.includes(r.id) ? '!' : '✓') : ''}</span><span className="t xs">{r.id}</span> {r.title}</div>)}
         </div>
@@ -41,16 +76,46 @@ export function Precheck() {
 export function Fixes() {
   const { lang, bump, say } = useContext(AppCtx); const f = useApi<any>('/findings'); const [diff, setDiff] = useState<any>(null)
   const fins: any[] = f.data?.findings ?? []; const res = (id: string) => fins.find(x => x.id === id)?.resolved
-  const upload = async () => { setDiff(await api('/applications/APP-0001/resubmit', { method: 'POST' })); say('Version 2 received. Only dependent checks re-ran.'); bump() }
-  const items = [['F-011', 'Upload one certified trust registration certificate that matches your AICTE record.', false], ['F-014', 'Upload the corrected architect-certified area statement.', true], ['F-016', 'Upload the renewed Fire NOC (current one ends 30 Sep 2027).', false]] as const
+  const uploadArea = async () => { setDiff(await api('/applications/APP-0001/resubmit', { method: 'POST' })); say('Version 2 received. Only dependent checks re-ran.'); bump() }
+
+  const uploadRenewedNoc = async (nocFile?: File) => {
+    const BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? '/api'
+    if (nocFile) {
+      const fd = new FormData()
+      fd.append('file', nocFile)
+      const r = await fetch(`${BASE}/applications/APP-0001/resubmit`, { method: 'POST', body: fd })
+      setDiff(await r.json())
+    } else {
+      setDiff(await api('/applications/APP-0001/resubmit', { method: 'POST' }))
+    }
+    say('Renewed Fire NOC received. Scrutiny re-ran and resolved F-016.')
+    bump()
+  }
+
+  const items = [
+    ['F-011', 'Upload one certified trust registration certificate that matches your AICTE record.', 'none'],
+    ['F-014', 'Upload the corrected architect-certified area statement.', 'area'],
+    ['F-016', 'Upload the renewed Fire NOC (current one ends 30 Sep 2027).', 'noc'],
+  ] as const
+
   return (
     <main style={{ paddingTop: 18 }}>
       <div className="t xs up dim">Institution desk · requests from the officer</div><h1 style={{ fontSize: '1.8rem' }}>What we need from you</h1>
       <p className="sm dim" style={{ maxWidth: 680 }}>Three findings about the trust name share one cause, so you receive one request. Use the language switch at the top right to read it in हिन्दी or मराठी.</p>
       <div className="slip ink ai" data-no="MESSAGE FROM THE REVIEWER" style={{ marginTop: 14, borderRightStyle: 'solid' }}><span className="who ai">drafted by AI, numbers checked, sent by the officer</span><div style={{ marginTop: 6 }}>{LETTER[lang]}</div><NumberBadge text={LETTER[lang]} fins={fins} /></div>
-      <div className="stack" style={{ marginTop: 16 }}>{items.map(([id, t, canUpload]) => (
+      <div className="stack" style={{ marginTop: 16 }}>{items.map(([id, t, uploadType]) => (
         <div key={id} className="slip" data-no={id} style={{ borderRightStyle: 'solid' }}><div className="row between"><span>{t}<FixNote f={fins.find(x => x.id === id)} resolved={!!res(id)} /></span>
-          {res(id) ? <span className="stamp PASSED">resolved</span> : canUpload ? <button className="btn dark" onClick={upload}>Upload corrected area statement</button> : <span className="xs dim">upload slot (demo: not wired)</span>}</div></div>))}</div>
+          {res(id) ? <span className="stamp PASSED">resolved</span> : uploadType === 'area' ? (
+            <button className="btn dark" onClick={uploadArea}>Upload corrected area statement</button>
+          ) : uploadType === 'noc' ? (
+            <div className="row" style={{ gap: 6 }}>
+              <label className="btn" style={{ cursor: 'pointer' }}>
+                Select NOC PDF
+                <input type="file" accept="application/pdf" style={{ display: 'none' }} onChange={e => e.target.files?.[0] && uploadRenewedNoc(e.target.files[0])} />
+              </label>
+              <button className="btn dark" onClick={() => uploadRenewedNoc()}>Upload renewed Fire NOC</button>
+            </div>
+          ) : <span className="xs dim">upload slot (demo: not wired)</span>}</div></div>))}</div>
       {diff && <div style={{ marginTop: 18 }}><DiffRibbon diff={diff} /></div>}
     </main>
   )
