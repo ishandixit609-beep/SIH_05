@@ -10,12 +10,14 @@ import { Precheck, Fixes } from './pages/Institution'
 import { RuleLab, Alerts, AuditPage, Results } from './pages/Others'
 import { About } from './pages/About'
 import { AuthPage } from './pages/Auth'
+import { Translator } from './i18n/Translator'
 
 function Root() {
-  const [rev, setRev] = useState(0); const [lang, setLang] = useState<Lang>('en'); const [msg, setMsg] = useState('')
+  const [rev, setRev] = useState(0); const [lang, setLangState] = useState<Lang>(() => { try { const v = localStorage.getItem('satyapan-lang'); return v === 'hi' || v === 'mr' ? v : 'en' } catch { return 'en' } });
+  const setLang = useCallback((l: Lang) => { setLangState(l); try { localStorage.setItem('satyapan-lang', l) } catch { /* private mode */ } }, []); const [msg, setMsg] = useState('')
   const bump = useCallback(() => setRev(r => r + 1), [])
   const say = useCallback((m: string) => { setMsg(m); setTimeout(() => setMsg(''), 2600) }, [])
-  const v = useMemo(() => ({ rev, bump, lang, setLang, say }), [rev, bump, lang, say])
+  const v = useMemo(() => ({ rev, bump, lang, setLang, say }), [rev, bump, lang, setLang, say])
   return (
     <AppCtx.Provider value={v}>
       <BrowserRouter>
@@ -26,6 +28,7 @@ function Root() {
         </Route></Routes>
       </BrowserRouter>
       {msg && <div className="toast" role="status">{msg}</div>}
+      <Translator lang={lang} />
     </AppCtx.Provider>
   )
 }

@@ -19,7 +19,9 @@ import { FoldStack } from '../ui/FoldStack'
 import { Stamp } from '../ui/Stamp'
 import { num } from '../lib/format'
 
-type Tab = 'document' | 'delta' | 'network'
+type Tab = 'document' | 'delta' | 'network' | 'infra' | 'calendar'
+const TABS: [Tab, string][] = [['document', 'Document'], ['delta', 'Delta'], ['network', 'Network'], ['infra', 'Infrastructure'], ['calendar', 'Calendar']]
+const fmtD = (d: string) => new Date(d + 'T00:00:00+05:30').toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' })
 export function Case() {
   const { bump, say } = useContext(AppCtx); const [sp] = useSearchParams()
   const cov = useApi<any>('/applications/APP-0001/coverage'); const fd = useApi<any>('/findings'); const tl = useApi<any>('/applications/APP-0001/timeline')
@@ -60,47 +62,46 @@ export function Case() {
   const version = cov.data.requirements.some((r: any) => r.reason === 'ok_after_resubmission') ? 2 : 1
   const submitWaiver = async (reason: string) => { await api('/applications/APP-0001/waivers', { method: 'POST', json: { check_id: waive, reason } }); say(`Waiver recorded for ${waive}`); setWaive(null); bump() }
 
+  const pin = tl.data.pins?.find((p: any) => p.inside_semester)
   return (
     <main style={{ paddingTop: 4 }}>
-      <div className="hero">
-        <div className="card intro">
-          <div className="campusimg" style={{ backgroundImage: 'url(/img/campus.jpg)' }} role="img" aria-label="Campus building, as submitted" />
+      <section className="card chead">
+        <div className="campusimg" style={{ backgroundImage: 'url(/img/campus.jpg)' }} role="img" aria-label="Campus building, as submitted" />
+        <div className="cid">
           <div className="t xs up dim">Case desk · APP-0001 · version {version}</div>
-          <h2 style={{ fontSize: '1.2rem', margin: '4px 0 8px' }}>Shri Vidya Institute of Engineering &amp; Technology, Pune</h2>
-          <div className="t xs dim">Institute ID {sm.data?.institution.id ?? 'SYN-PUNE-0001'}</div>
-          <div className="row" style={{ marginTop: 8 }}><span className="xs">Status</span><Stamp state={cov.data.open_checks.length ? 'MANUAL_REVIEW' : 'PASSED'} /><span className="xs dim">{sm.data?.cycle ?? 'AY 2027-28'}</span></div>
+          <h2>Shri Vidya Institute of Engineering &amp; Technology, Pune</h2>
+          <div className="row" style={{ gap: 10 }}><span className="t xs dim">Institute ID {sm.data?.institution.id ?? 'SYN-PUNE-0001'}</span><Stamp state={cov.data.open_checks.length ? 'MANUAL_REVIEW' : 'PASSED'} /><span className="xs dim">{sm.data?.cycle ?? 'AY 2027-28'}</span></div>
         </div>
-        <div className="stack">
-          <HealthTiles cov={cov.data} ph={ph.data} />
-          <div className="card"><h4>Review calendar · document expiry radar</h4><CalendarRail tl={tl.data} /></div>
-        </div>
-        <SealSlot cov={cov.data} onWaive={setWaive} onDone={m => { say(m); bump() }} />
-      </div>
-      <div className="desk">
+        {pin && <button className="chip warn" onClick={() => setTab('calendar')} title="Open the calendar">{pin.label} ends {fmtD(pin.expires)} (inside semester)</button>}
+      </section>
+      <SealSlot cov={cov.data} onWaive={setWaive} onDone={m => { say(m); bump() }} />
+      <HealthTiles cov={cov.data} ph={ph.data} />
+      <div className="work">
         <div className="col-sticky"><Spine cov={cov.data} fins={fins} sel={cur?.req ?? null} onPick={(rid, d, p) => { const f = ordered.find(x => x.req === rid); if (f) setSel(f.id); else { setDoc({ doc: d, page: p }); setTab('document') } }} /></div>
-        <div className="card">
-          <div className="dtabs" role="tablist">{(['document', 'delta', 'network'] as Tab[]).map(t => <button key={t} role="tab" aria-selected={tab === t} className={tab === t ? 'on' : ''} onClick={() => setTab(t)}>{t}</button>)}</div>
-          {tab === 'document' && <><PdfViewer doc={doc.doc} page={doc.page} box={box} />
-            {cur && <div style={{ marginTop: 10 }}><div className="xs up dim t" style={{ marginBottom: 4 }}>trace</div><TraceRibbon trace={trace.length ? trace : [cur.rule_version, cur.rule_id, cur.id]} onGraph={() => setGraph(true)} /></div>}</>}
+        <section className="card main">
+          <div className="dtabs" role="tablist">{TABS.map(([t, label]) => <button key={t} role="tab" aria-selected={tab === t} className={tab === t ? 'on' : ''} onClick={() => setTab(t)}>{label}</button>)}</div>
+          {tab === 'document' && <div className="docgrid">
+            <div className="docview"><PdfViewer doc={doc.doc} page={doc.page} box={box} />
+              {cur && <div style={{ marginTop: 10 }}><div className="xs up dim t" style={{ marginBottom: 4 }}>trace</div><TraceRibbon trace={trace.length ? trace : [cur.rule_version, cur.rule_id, cur.id]} onGraph={() => setGraph(true)} /></div>}</div>
+            <aside className="notes stack">
+              <div className="row between"><span className="t xs up dim">margin notes · {mine.length || fins.length} on this requirement</span><span className="xs dim"><kbd>J</kbd><kbd>K</kbd> move</span></div>
+              {(mine.length ? mine : fins).map(f => <FindingSlip key={f.id} f={f} sel={f.id === sel} onPick={() => setSel(f.id)} />)}
+              <NextStep f={cur} />
+              <div className="row" style={{ gap: 6 }}>
+                <button className="btn" onClick={() => act('accept')}>Accept <kbd>Y</kbd></button><button className="btn" onClick={() => act('dismiss')}>Dismiss <kbd>N</kbd></button>
+                <button className="btn" onClick={() => act('request_info')}>Request info <kbd>R</kbd></button><button className="btn" onClick={() => setClause(true)}>Clause <kbd>C</kbd></button>
+              </div>
+              <div className="xs dim">Accept and dismiss are human acts and only clear items marked for review. A FAILED rule needs a fix or a written waiver.</div>
+            </aside></div>}
           {tab === 'delta' && <DeltaTab cl={cl.data} />}
           {tab === 'network' && net.data && <div style={{ marginTop: 14 }}><div className="t xs up dim" style={{ marginBottom: 6 }}>cross-institution</div><NetworkMap net={net.data} /><div className="row" style={{ marginTop: 4 }}><button className="btn" onClick={() => setSel('F-017')}>open finding F-017</button><span className="xs dim">Legitimate causes exist (relieving date, data-entry lag). A human confirms.</span></div></div>}
-        </div>
-        <div className="col-sticky stack">
-          <div className="row between"><span className="t xs up dim">margin notes · {mine.length || fins.length} on this requirement</span><span className="xs dim"><kbd>J</kbd><kbd>K</kbd> move</span></div>
-          {(mine.length ? mine : fins).map(f => <FindingSlip key={f.id} f={f} sel={f.id === sel} onPick={() => setSel(f.id)} />)}
-          <NextStep f={cur} />
-          <div className="row" style={{ flexWrap: 'wrap', gap: 6 }}>
-            <button className="btn" onClick={() => act('accept')}>Accept <kbd>Y</kbd></button><button className="btn" onClick={() => act('dismiss')}>Dismiss <kbd>N</kbd></button>
-            <button className="btn" onClick={() => act('request_info')}>Request info <kbd>R</kbd></button><button className="btn" onClick={() => setClause(true)}>Clause <kbd>C</kbd></button>
-          </div>
-          <div className="xs dim">Accept and dismiss are human acts and only clear items marked for review. A FAILED rule needs a fix or a written waiver.</div>
-        </div>
+          {tab === 'infra' && ph.data && <div className="band" style={{ marginTop: 14 }}>
+            <div><div className="t xs up dim" style={{ marginBottom: 8 }}>Photo evidence · 6 uploads</div><PhotoEvidence ph={ph.data} sel={pick} onSel={setPick} />
+              <div className="row" style={{ marginTop: 12 }}><button className="btn" onClick={() => { setSel('F-024'); setTab('document') }}>open finding F-024</button><span className="xs dim">Click a photo to find its pin.</span></div></div>
+            <div><div className="t xs up dim" style={{ marginBottom: 8 }}>Where the photos were taken</div><PlausibilityMap ph={ph.data} sel={pick} onSel={setPick} /></div></div>}
+          {tab === 'calendar' && <div style={{ marginTop: 14 }}><div className="t xs up dim" style={{ marginBottom: 6 }}>Review calendar · document expiry radar</div><CalendarRail tl={tl.data} /></div>}
+        </section>
       </div>
-      {ph.data && <div className="band">
-        <div className="card"><h4>Photo evidence <span className="xs t dim" style={{ fontWeight: 400 }}>6 uploads</span></h4><PhotoEvidence ph={ph.data} sel={pick} onSel={setPick} />
-          <div className="row" style={{ marginTop: 12 }}><button className="btn" onClick={() => setSel('F-024')}>open finding F-024</button><span className="xs dim">Click a photo to find its pin.</span></div></div>
-        <div className="card"><h4>Where the photos were taken</h4><PlausibilityMap ph={ph.data} sel={pick} onSel={setPick} /></div>
-      </div>}
       <ChainFooter />
       <ClauseDrawer f={clause ? cur : null} rule={rule} onClose={() => setClause(false)} />
       {graph && <GraphModal trace={trace} finding={cur} onClose={() => setGraph(false)} />}

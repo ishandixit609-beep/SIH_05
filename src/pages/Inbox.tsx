@@ -4,18 +4,18 @@ import { FoldStack } from '../ui/FoldStack'
 import { Stamp } from '../ui/Stamp'
 import { BundleCard } from '../ui/DiffBundle'
 import { Donut, Legend, CoverageBars, Scatter, type Part } from '../ui/Charts'
-import { PhotoEvidence } from '../ui/PhotoEvidence'
 import { Workflow, type Step } from '../ui/Workflow'
 import { useContext, useEffect, useState } from 'react'
 import { AppCtx } from '../ctx'
 import { num } from '../lib/format'
 import { Loading } from '../ui/Loading'
 
+type DTab = 'delta' | 'coverage' | 'peers'
 export function Inbox() {
   const { lang } = useContext(AppCtx)
   const s = useApi<any>('/applications/APP-0001/summary'); const c = useApi<any>('/applications/APP-0001/claims'); const f = useApi<any>('/findings'); const a = useApi<any>('/alerts')
   const cov = useApi<any>('/applications/APP-0001/coverage'); const ph = useApi<any>('/applications/APP-0001/photos')
-  const [peers, setPeers] = useState<any[]>([]); const [pick, setPick] = useState<number | null>(null)
+  const [peers, setPeers] = useState<any[]>([]); const [tab, setTab] = useState<DTab>('delta')
   useEffect(() => { fetch('/fixtures/peers.json').then(r => r.json()).then(setPeers).catch(() => setPeers([])) }, [])
   if (!s.data || !c.data || !f.data) return <Loading label="Opening the docket…" apis={[s, c, f]} />
   const fins: any[] = f.data.findings.filter((x: any) => !x.resolved)
@@ -36,6 +36,16 @@ export function Inbox() {
     { n: 5, who: 'human', title: 'Officer acts', big: `${s.data.open_checks.length} open`, line: 'accept, dismiss, request info, or waive in writing' },
     { n: 6, who: 'rules', title: 'Seal and audit', big: s.data.open_checks.length ? '409 until clear' : 'Ready', line: 'Approve is blocked by the server; every act joins a hash chain' },
   ]
+  const Delta = (
+    <div>
+      <div className="donutrow" style={{ marginBottom: 14 }}><Donut parts={parts} center={String(total)} sub="claims" /><Legend parts={parts} /></div>
+      <FoldStack claims={c.data.claims} sample={c.data.sample} />
+      <table className="ledger tight" style={{ marginTop: 12 }}><thead><tr><th>Delta tally · {total} claims</th><th className="num">n</th><th>what happens</th></tr></thead><tbody>
+        <tr><td className="t">UNCHANGED</td><td className="num">{counts.UNCHANGED}</td><td className="sm">folded, sampled, expiry re-tested</td></tr>
+        <tr><td className="t">CHANGED, WITH EVIDENCE</td><td className="num">{counts.CHANGED_WITH_EVIDENCE}</td><td className="sm">checked against the supporting document</td></tr>
+        <tr><td className="t" style={{ color: 'var(--stamp)' }}>CHANGED, NO EXPLANATION</td><td className="num"><b>{counts.CHANGED_NO_EXPLANATION}</b></td><td className="sm">red queue: needs the officer</td></tr>
+        <tr><td className="t">NEW</td><td className="num">{counts.NEW}</td><td className="sm">full scrutiny, nothing to compare</td></tr></tbody></table>
+    </div>)
   return (
     <main style={{ paddingTop: 4 }}>
       <div className="pagehead">
@@ -43,30 +53,23 @@ export function Inbox() {
           <div className="t sm dim">{s.data.id} · {s.data.category} · {s.data.cycle} · version {s.data.version} · {s.data.institution.state}</div></div>
         <Link to="/case" className="btn dark" style={{ textDecoration: 'none', padding: '10px 20px' }}>Open the case desk →</Link>
       </div>
-      <Workflow steps={steps} />
-      <div className="kpis" style={{ marginTop: 14 }}>
+      <div className="kpis">
         <div className="kpi"><div className="l">Claims in this file</div><div className="v">{total}</div><div className="xs dim">{counts.UNCHANGED} carried forward, {total - counts.UNCHANGED} need a look</div></div>
         <div className="kpi red"><div className="l">Rules failed</div><div className="v" style={{ color: 'var(--stamp)' }}>{red.length + unexplained.length}</div><div className="xs dim">red queue, officer must act</div></div>
         <div className="kpi amber"><div className="l">Awaiting a human</div><div className="v">{amber.length}</div><div className="xs dim">{s.data.open_checks.length} required checks open · {a.data?.alerts.length ?? 0} alerts</div></div>
         <div className="kpi green"><div className="l">Anomaly vs peers</div><div className="v">{s.data.anomaly.flag ? 'Flagged' : 'Normal'}</div><div className="xs dim">largest deviation: {s.data.anomaly.top_feature.replace(/_/g, ' ')}</div></div>
       </div>
-      <div className="charts" style={{ marginTop: 14 }}>
-        <div className="card"><h4>Delta tally · {total} claims</h4><div className="donutrow"><Donut parts={parts} center={String(total)} sub="claims" /><Legend parts={parts} /></div></div>
-        <div className="card"><h4>Proof coverage by requirement</h4><CoverageBars reqs={cov.data?.requirements ?? []} /></div>
-        <div className="card"><h4>Faculty against intake, peers in the same state</h4>
-          {meI && meF && pts.length > 2 ? <Scatter pts={pts} me={{ x: meI, y: meF, label: 'this application' }} xl="total intake (seats)" yl="faculty count" /> : <p className="xs dim">Peer data not loaded.</p>}
-          <div className="xs dim">{s.data.anomaly.wording}.</div></div>
-      </div>
-      <div className="grid2" style={{ marginTop: 14, alignItems: 'start' }}>
-        <div>
-          <FoldStack claims={c.data.claims} sample={c.data.sample} />
-          <div className="card" style={{ marginTop: 14 }}><table className="ledger tight"><thead><tr><th>Delta tally · 80 claims</th><th className="num">n</th><th>what happens</th></tr></thead><tbody>
-            <tr><td className="t">UNCHANGED</td><td className="num">{counts.UNCHANGED}</td><td className="sm">folded, sampled, expiry re-tested</td></tr>
-            <tr><td className="t">CHANGED, WITH EVIDENCE</td><td className="num">{counts.CHANGED_WITH_EVIDENCE}</td><td className="sm">checked against the supporting document</td></tr>
-            <tr><td className="t" style={{ color: 'var(--stamp)' }}>CHANGED, NO EXPLANATION</td><td className="num"><b>{counts.CHANGED_NO_EXPLANATION}</b></td><td className="sm">red queue: needs the officer</td></tr>
-            <tr><td className="t">NEW</td><td className="num">{counts.NEW}</td><td className="sm">full scrutiny, nothing to compare</td></tr></tbody></table></div>
-          {ph.data && <div className="card" style={{ marginTop: 14 }}><h4>Photo evidence <Link to="/case" className="xs t" style={{ fontWeight: 400 }}>map and details →</Link></h4><PhotoEvidence ph={ph.data} sel={pick} onSel={setPick} /></div>}
-        </div>
+      <div className="split">
+        <section className="card">
+          <div className="dtabs" role="tablist">{([['delta', 'Delta'], ['coverage', 'Coverage'], ['peers', 'Peers']] as [DTab, string][]).map(([k, l]) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{l}</button>)}</div>
+          <div style={{ marginTop: 14 }}>
+            {tab === 'delta' && Delta}
+            {tab === 'coverage' && <><h4 className="ctitle">Proof coverage by requirement</h4><CoverageBars reqs={cov.data?.requirements ?? []} /></>}
+            {tab === 'peers' && <><h4 className="ctitle">Faculty against intake, peers in the same state</h4>
+              {meI && meF && pts.length > 2 ? <Scatter pts={pts} me={{ x: meI, y: meF, label: 'this application' }} xl="total intake (seats)" yl="faculty count" /> : <p className="xs dim">Peer data not loaded.</p>}
+              <div className="xs dim">{s.data.anomaly.wording}.</div></>}
+          </div>
+        </section>
         <div className="stack">
           <div className="slip ink human" data-no="CASE STATE">
             <div className="row between"><span style={{ fontSize: '1.15rem', fontWeight: 700 }}>{s.data.overall === 'READY_FOR_DECISION' ? 'Ready for decision' : 'Review incomplete'}</span><Stamp state={s.data.overall === 'READY_FOR_DECISION' ? 'PASSED' : 'MANUAL_REVIEW'} big /></div>
@@ -82,9 +85,10 @@ export function Inbox() {
             <div className="who human">needs a human read · {amber.length}</div>
             {amber.slice(0, 7).map(x => <Link key={x.id} to={`/case?f=${x.id}`} className="row between sm" style={{ textDecoration: 'none', padding: '5px 0', borderBottom: '1px solid var(--rule)' }}><span><b className="t">{x.id}</b> {x.rule_id.replace(/_/g, ' ').toLowerCase()}</span><Stamp state={x.state} /></Link>)}
           </div>
+          {f.data.bundles.map((b: any) => <BundleCard key={b.id} b={b} fins={f.data.findings} lang={lang} />)}
         </div>
       </div>
-      {f.data.bundles.map((b: any) => <BundleCard key={b.id} b={b} fins={f.data.findings} lang={lang} />)}
+      <details className="disc"><summary>How a case moves through SATYAPAN</summary><Workflow steps={steps} /></details>
     </main>
   )
 }
